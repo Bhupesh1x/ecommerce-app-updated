@@ -229,7 +229,7 @@ export const categoriesData = [
     title: "Gifts",
     subTitle: "",
     image_Url:
-      "https://securecdn.pymnts.com/wp-content/uploads/2014/11/Gifts-Photo-700x489.jpg",
+      "https://st-troy.mncdn.com/mnresize/1500/1500/Content/media/ProductImg/original/mpwp3tua-apple-iphone-14-256gb-mavi-mpwp3tua-637986832343472449.jpg",
   },
   {
     id: 7,
@@ -644,5 +644,44 @@ export const footerSupportLinks = [
   },
   {
     name: "Live chat",
+  },
+];
+
+export const faqData = [
+  {
+    id: 2,
+    title: "What is your return policy?",
+    subTitle:
+      "If you're not satisfied with your purchase, we accept returnswithin 30 days of delivery. To initiate a return, please email usat support@myecommercestore.com with your order number and a brief explanation of why you're returning the item.",
+  },
+  {
+    id: 3,
+    title: "How do I track my order?",
+    subTitle:
+      "You can track your order by clicking the tracking link in yourshipping confirmation email, or by logging into your account on our website and viewing the order details.",
+  },
+  {
+    id: 4,
+    title: "How do I contact customer support?",
+    subTitle:
+      "You can contact our customer support team by emailing us atsupport@myecommercestore.com, or by calling us at (555) 123-4567 between the hours of 9am and 5pm EST, Monday through Friday.",
+  },
+  {
+    id: 5,
+    title: "Can I change or cancel my order?",
+    subTitle:
+      " Unfortunately, once an order has been placed, we are not able tomake changes or cancellations. If you no longer want the itemsyou've ordered, you can return them for a refund within 30 days of delivery.",
+  },
+  {
+    id: 6,
+    title: "Do you offer international shipping?",
+    subTitle:
+      "Currently, we only offer shipping within the United States and india.",
+  },
+  {
+    id: 7,
+    title: "What payment methods do you accept?",
+    subTitle:
+      "We accept visa,mastercard,paypal payment method also we have cash on delivery system.",
   },
 ];

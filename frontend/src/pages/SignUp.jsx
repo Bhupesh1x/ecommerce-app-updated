@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import uploadFile, { serverUrl } from "../utils/uploadFile";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -13,6 +13,8 @@ function SignUp() {
   const [isVisible, setIsVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const navigate = useNavigate();
+  const currUser = JSON.parse(localStorage.getItem("ecommerceUser"));
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
@@ -35,22 +37,30 @@ function SignUp() {
 
       if (isUploading) {
         return toast.error("Please wait for image to upload", {
-          id: notification,
+          id: "Uplaoding",
         });
       }
 
-      const result = await axios.post(`${serverUrl}/user/create-user`, data);
+      await axios.post(`${serverUrl}/user/create-user`, data, {
+        withCredentials: true,
+      });
       toast.success("Register as a new user Successfull", {
         id: notification,
       });
 
-      console.log(result);
-    } catch (err) {
-      toast.error(err.response.data, {
+      navigate("/");
+    } catch (error) {
+      toast.error(error?.response?.data, {
         id: notification,
       });
     }
   }
+
+  useEffect(() => {
+    if (currUser) {
+      navigate("/");
+    }
+  }, [currUser, navigate]);
 
   return (
     <div className="h-[100vh]  flex flex-col items-center justify-center">
@@ -69,7 +79,7 @@ function SignUp() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <p className="font-semibold my-1">Email Address</p>
+        <p className="mt-3 font-semibold my-1">Email Address</p>
         <input
           type="email"
           className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
@@ -136,10 +146,10 @@ function SignUp() {
         </button>
 
         <p className="my-3">
-          Not have a account?{" "}
-          <Link to="/signup">
+          Already have a account?{" "}
+          <Link to="/login">
             <span className="text-blue-500 font-semibold cursor-pointer">
-              Sign Up
+              Login
             </span>
           </Link>
         </p>

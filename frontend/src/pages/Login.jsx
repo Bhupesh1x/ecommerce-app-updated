@@ -1,15 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { serverUrl } from "../utils/uploadFile";
+import { toast } from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+  const currUser = JSON.parse(localStorage.getItem("ecommerceUser"));
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    const notification = () => toast("Logging you in...");
+    const data = {
+      email,
+      password,
+    };
+    try {
+      const result = await axios.post(`${serverUrl}/user/login-user`, data, {
+        withCredentials: true,
+      });
+      toast.success("Login Sucessfull", {
+        id: notification,
+      });
+      localStorage.setItem("ecommerceUser", JSON.stringify(result.data.user));
+      navigate("/");
+    } catch (error) {
+      toast.error(error?.response?.data, {
+        id: notification,
+      });
+    }
   }
+
+  useEffect(() => {
+    if (currUser) {
+      navigate("/");
+    }
+  }, [currUser, navigate]);
 
   return (
     <div className="h-[100vh]  flex flex-col items-center justify-center">
@@ -23,7 +53,7 @@ function Login() {
         <p className="font-semibold my-1">Email Address</p>
         <input
           type="email"
-          className="border-1 border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+          className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -32,7 +62,7 @@ function Login() {
           <p className="mt-3 my-1 font-semibold">Password</p>
           <input
             type={isVisible ? "text" : "password"}
-            className="border-1 border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+            className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
