@@ -10,10 +10,11 @@ import {
 } from "./Routes.js";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
+import { getCurrUser } from "./utils/getUser.js";
 
 function App() {
   const navigate = useNavigate();
-  const currUser = JSON.parse(localStorage.getItem("ecommerceUser"));
+  const currUser = getCurrUser();
 
   useEffect(() => {
     if (!currUser) {

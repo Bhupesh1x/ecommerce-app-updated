@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import uploadFile, { serverUrl } from "../utils/uploadFile";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { getCurrUser } from "../utils/getUser";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -14,7 +15,7 @@ function SignUp() {
   const [avatar, setAvatar] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
-  const currUser = JSON.parse(localStorage.getItem("ecommerceUser"));
+  const currUser = getCurrUser();
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];

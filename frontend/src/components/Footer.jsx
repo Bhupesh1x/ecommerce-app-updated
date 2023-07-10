@@ -10,6 +10,7 @@ import {
   footerProductLinks,
   footerSupportLinks,
   footercompanyLinks,
+  navItems,
 } from "../static/data";
 
 const Footer = () => {
@@ -61,6 +62,18 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center md:text-start">
+          <h1 className="mb-1 font-semibold text-lg">Shop</h1>
+          {navItems.map((link, index) => (
+            <li
+              key={index}
+              className="text-white hover:text-teal-600 transition-all duration-300 ease-in"
+            >
+              <Link to={link.url}>{link.title}</Link>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="text-center md:text-start">
           <h1 className="mb-1 font-semibold text-lg">Company</h1>
           {footerProductLinks.map((link, index) => (
             <li
@@ -73,20 +86,8 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center md:text-start">
-          <h1 className="mb-1 font-semibold text-lg">Shop</h1>
-          {footerProductLinks.map((link, index) => (
-            <li
-              key={index}
-              className="text-white hover:text-teal-600 transition-all duration-300 ease-in"
-            >
-              <Link to={link.link}>{link.name}</Link>
-            </li>
-          ))}
-        </ul>
-
-        <ul className="text-center md:text-start">
           <h1 className="mb-1 font-semibold text-lg">Support</h1>
-          {footerProductLinks.map((link, index) => (
+          {footerSupportLinks.map((link, index) => (
             <li
               key={index}
               className="text-white hover:text-teal-600 transition-all duration-300 ease-in"

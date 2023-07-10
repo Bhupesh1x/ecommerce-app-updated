@@ -5,10 +5,14 @@ import { productData } from "../static/data";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
+import { getCurrUser } from "../utils/getUser";
+import Cart from "./Cart.jsx";
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
+  const [openCart, setOpenCart] = useState(false);
+  const currUser = getCurrUser();
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -27,6 +31,10 @@ function Header() {
       setSearchData(filteredProducts);
     }
   }, [searchTerm]);
+
+  function handleOpenCart() {
+    setOpenCart(true);
+  }
 
   return (
     <nav className="sticky top-0 z-50 bg-slate-50 shadow-sm">
@@ -72,9 +80,24 @@ function Header() {
             <span className="inline">Become seller</span>{" "}
             <IoIosArrowForward className=" inline" />
           </button>
-          <AiOutlineShoppingCart size={25} className="text-gray-500" />
-          <CgProfile size={25} className="text-gray-500" />
+          <AiOutlineShoppingCart
+            size={25}
+            className="text-gray-500 cursor-pointer"
+            onClick={handleOpenCart}
+          />
+          {currUser ? (
+            <img
+              src={currUser.avatar}
+              alt=""
+              className="h-[25px] w-[25px] object-cover rounded-full cursor-pointer"
+            />
+          ) : (
+            <CgProfile size={25} className="text-gray-500 cursor-pointer" />
+          )}
         </div>
+
+        {/* Cart Model */}
+        {openCart ? <Cart setOpenCart={setOpenCart} open={openCart} /> : null}
       </div>
     </nav>
   );

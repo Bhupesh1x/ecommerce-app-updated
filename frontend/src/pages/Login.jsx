@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { serverUrl } from "../utils/uploadFile";
 import { toast } from "react-hot-toast";
+import { getCurrUser } from "../utils/getUser";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  const currUser = JSON.parse(localStorage.getItem("ecommerceUser"));
+  const currUser = getCurrUser();
 
   async function handleSubmit(e) {
     e.preventDefault();
