@@ -11,7 +11,7 @@ function ProfilePage() {
     <>
       <Header />
       <Navbar />
-      <div className="container px-6 flex gap-8 py-10">
+      <div className="container px-6 flex gap-8 py-6 lg:py-10">
         <ProfileSidebar active={active} setActive={setActive} />
         <ProfileDetails active={active} />
       </div>

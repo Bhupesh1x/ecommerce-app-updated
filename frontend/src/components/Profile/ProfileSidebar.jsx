@@ -9,13 +9,31 @@ import { MdOutlineTrackChanges } from "react-icons/md";
 import { TbAddressBook } from "react-icons/tb";
 import { RxPerson } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { serverUrl } from "../../utils/uploadFile";
+import { toast } from "react-hot-toast";
 
 function ProfileSidebar({ active, setActive }) {
   const navigate = useNavigate();
+
+  async function logoutHandler() {
+    try {
+      const result = await axios.get(`${serverUrl}/user/logout-user`, {
+        withCredentials: true,
+      });
+
+      localStorage.clear("ecommerceUser");
+      toast.success(result.data.message);
+      navigate("/login");
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
+
   return (
     <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-4">
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(1)}
       >
         <RxPerson size={20} color={active === 1 ? "red" : ""} />
@@ -28,7 +46,7 @@ function ProfileSidebar({ active, setActive }) {
         </span>
       </div>
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(2)}
       >
         <HiOutlineShoppingBag size={20} color={active === 2 ? "red" : ""} />
@@ -39,7 +57,7 @@ function ProfileSidebar({ active, setActive }) {
         </span>
       </div>
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(3)}
       >
         <HiOutlineReceiptRefund size={20} color={active === 3 ? "red" : ""} />
@@ -51,7 +69,7 @@ function ProfileSidebar({ active, setActive }) {
       </div>
 
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         // onClick={() => setActive(4) || navigate("/inbox")}
         onClick={() => setActive(4)}
       >
@@ -64,7 +82,7 @@ function ProfileSidebar({ active, setActive }) {
       </div>
 
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(5)}
       >
         <MdOutlineTrackChanges size={20} color={active === 5 ? "red" : ""} />
@@ -76,7 +94,7 @@ function ProfileSidebar({ active, setActive }) {
       </div>
 
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(6)}
       >
         <AiOutlineCreditCard size={20} color={active === 6 ? "red" : ""} />
@@ -88,7 +106,7 @@ function ProfileSidebar({ active, setActive }) {
       </div>
 
       <div
-        className="flex items-center cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(7)}
       >
         <TbAddressBook size={20} color={active === 7 ? "red" : ""} />
@@ -100,8 +118,8 @@ function ProfileSidebar({ active, setActive }) {
       </div>
 
       <div
-        className="single_item flex items-center cursor-pointer w-full mb-8"
-        // onClick={logoutHandler}
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
+        onClick={logoutHandler}
       >
         <AiOutlineLogin size={20} color={active === 8 ? "red" : ""} />
         <span

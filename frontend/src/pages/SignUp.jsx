@@ -42,9 +42,10 @@ function SignUp() {
         });
       }
 
-      await axios.post(`${serverUrl}/user/create-user`, data, {
+      const result = await axios.post(`${serverUrl}/user/create-user`, data, {
         withCredentials: true,
       });
+      localStorage.setItem("ecommerceUser", JSON.stringify(result.data.user));
       toast.success("Register as a new user Successfull", {
         id: notification,
       });

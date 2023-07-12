@@ -6,14 +6,18 @@ module.exports.isAuthenticated = async (req, res, next) => {
 
   if (!ecommerceToken) return res.status(401).send("Please login to continue");
 
-  const verifyUser = await jwt.verify(
-    ecommerceToken,
-    process.env.JWT_SECRET_KEY
-  );
+  try {
+    const verifyUser = await jwt.verify(
+      ecommerceToken,
+      process.env.JWT_SECRET_KEY
+    );
 
-  //if (!verifyUser) return res.status(401).send("Please login to continue");
+    if (!verifyUser) return res.status(401).send("Please login to continue");
 
-  req.user = await User.findById(verifyUser.id);
+    req.user = await User.findById(verifyUser.id);
 
-  next();
+    next();
+  } catch (error) {
+    res.status(401).send("Please login to continue");
+  }
 };

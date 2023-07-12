@@ -21,9 +21,10 @@ function Login() {
       password,
     };
     try {
-      await axios.post(`${serverUrl}/user/login-user`, data, {
+      const result = await axios.post(`${serverUrl}/user/login-user`, data, {
         withCredentials: true,
       });
+      localStorage.setItem("ecommerceUser", JSON.stringify(result.data.user));
       toast.success("Login Sucessfull", {
         id: notification,
       });

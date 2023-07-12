@@ -10,28 +10,10 @@ import {
   FaqPage,
   ProfilePage,
 } from "./Routes.js";
-import { Toaster, toast } from "react-hot-toast";
-import { useEffect } from "react";
-import axios from "axios";
-import { serverUrl } from "./utils/uploadFile.js";
+import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./ProtectedRoute.js";
 
 function App() {
-  async function getUser() {
-    try {
-      const result = await axios.get(`${serverUrl}/user/get-user`, {
-        withCredentials: true,
-      });
-
-      localStorage.setItem("ecommerceUser", JSON.stringify(result.data));
-    } catch (error) {
-      toast.error(error?.response?.data);
-    }
-  }
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <div className="bg-[#F6F6F5]">
       <Routes>
@@ -43,7 +25,15 @@ function App() {
         <Route exact path="/best-selling" element={<BestSellingPage />} />
         <Route exact path="/events" element={<EventsPage />} />
         <Route exact path="/faq" element={<FaqPage />} />
-        <Route exact path="/profile" element={<ProfilePage />} />
+        <Route
+          exact
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Toaster />
     </div>

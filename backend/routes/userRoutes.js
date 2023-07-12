@@ -72,7 +72,7 @@ routes.get("/get-user", isAuthenticated, async (req, res) => {
 
 routes.get("/logout-user", isAuthenticated, async (req, res) => {
   try {
-    res.cookie("token", null, {
+    res.cookie("ecommerceToken", null, {
       httpOnly: true,
     });
     res.status(201).json({
