@@ -10,17 +10,27 @@ import {
   FaqPage,
   ProfilePage,
 } from "./Routes.js";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
+import { useEffect } from "react";
+import axios from "axios";
+import { serverUrl } from "./utils/uploadFile.js";
 
 function App() {
-  // const navigate = useNavigate();
-  // const currUser = getCurrUser();
+  async function getUser() {
+    try {
+      const result = await axios.get(`${serverUrl}/user/get-user`, {
+        withCredentials: true,
+      });
 
-  // useEffect(() => {
-  //   if (!currUser) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+      localStorage.setItem("ecommerceUser", JSON.stringify(result.data));
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div className="bg-[#F6F6F5]">

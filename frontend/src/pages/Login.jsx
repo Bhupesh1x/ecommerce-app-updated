@@ -21,13 +21,12 @@ function Login() {
       password,
     };
     try {
-      const result = await axios.post(`${serverUrl}/user/login-user`, data, {
+      await axios.post(`${serverUrl}/user/login-user`, data, {
         withCredentials: true,
       });
       toast.success("Login Sucessfull", {
         id: notification,
       });
-      localStorage.setItem("ecommerceUser", JSON.stringify(result.data.user));
       navigate("/");
     } catch (error) {
       toast.error(error?.response?.data, {

@@ -57,7 +57,7 @@ routes.post("/login-user", async (req, res) => {
 
 // Load User
 
-routes.get("/get-user", isAuthenticated, async (req, res, next) => {
+routes.get("/get-user", isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -70,25 +70,18 @@ routes.get("/get-user", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// router.get(
-//   "/getuser",
-//   isAuthenticated,
-//   (async (req, res, next) => {
-//     try {
-//       const user = await User.findById(req.user.id);
-
-//       if (!user) {
-//         return next(new ErrorHandler("User doesn't exists", 400));
-//       }
-
-//       res.status(200).json({
-//         success: true,
-//         user,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   })
-// );
+routes.get("/logout-user", isAuthenticated, async (req, res) => {
+  try {
+    res.cookie("token", null, {
+      httpOnly: true,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Log out successful!",
+    });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
 
 module.exports = routes;

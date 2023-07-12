@@ -38,11 +38,13 @@ function Header() {
 
   return (
     <nav className="sticky top-0 z-50 bg-slate-50 shadow-sm">
-      <div className="container flex items-center justify-between py-4 px-6  ">
-        <img
-          src="https://shopo.quomodothemes.website/assets/images/logo.svg"
-          alt=""
-        />
+      <div className="container flex items-center justify-between py-4 px-6">
+        <Link to="/">
+          <img
+            src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+            alt=""
+          />
+        </Link>
 
         <div className="relative bg-gray-100 flex items-center border border-gray-400 rounded-md px-2 md:px-4 py-1 ">
           <input
@@ -88,13 +90,15 @@ function Header() {
           {currUser ? (
             <Link to="/profile">
               <img
-                src={currUser.avatar}
+                src={currUser?.avatar}
                 alt=""
                 className="h-[25px] w-[25px] object-cover rounded-full cursor-pointer"
               />
             </Link>
           ) : (
-            <CgProfile size={25} className="text-gray-500 cursor-pointer" />
+            <Link to="/login">
+              <CgProfile size={25} className="text-gray-500 cursor-pointer" />
+            </Link>
           )}
         </div>
 
