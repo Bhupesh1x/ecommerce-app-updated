@@ -1,26 +1,26 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import {
   Login,
   SignUp,
   Home,
   ProductsPage,
+  ProductDetailPage,
   BestSellingPage,
   EventsPage,
   FaqPage,
+  ProfilePage,
 } from "./Routes.js";
 import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
-import { getCurrUser } from "./utils/getUser.js";
 
 function App() {
-  const navigate = useNavigate();
-  const currUser = getCurrUser();
+  // const navigate = useNavigate();
+  // const currUser = getCurrUser();
 
-  useEffect(() => {
-    if (!currUser) {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!currUser) {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   return (
     <div className="bg-[#F6F6F5]">
@@ -29,9 +29,11 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route exact path="/" element={<Home />} />
         <Route exact path="/products" element={<ProductsPage />} />
+        <Route exact path="/product/:id" element={<ProductDetailPage />} />
         <Route exact path="/best-selling" element={<BestSellingPage />} />
         <Route exact path="/events" element={<EventsPage />} />
         <Route exact path="/faq" element={<FaqPage />} />
+        <Route exact path="/profile" element={<ProfilePage />} />
       </Routes>
       <Toaster />
     </div>

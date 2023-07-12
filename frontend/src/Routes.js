@@ -4,7 +4,9 @@ import Home from "./pages/Home";
 import ProductsPage from "./pages/ProductsPage";
 import BestSellingPage from "./pages/BestSellingPage";
 import EventsPage from "./pages/EventsPage";
-import FaqPage from "./pages/FaqPage.jsx";
+import FaqPage from "./pages/FaqPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
 export {
   Login,
@@ -14,4 +16,6 @@ export {
   BestSellingPage,
   EventsPage,
   FaqPage,
+  ProductDetailPage,
+  ProfilePage,
 };

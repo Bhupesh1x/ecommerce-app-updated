@@ -1,30 +1,33 @@
 import React, { useState } from "react";
 import {
-  AiFillHeart,
   AiFillStar,
   AiOutlineEye,
   AiOutlineHeart,
   AiOutlineStar,
 } from "react-icons/ai";
 import ProductDetailsModal from "./product/ProductDetailsModal";
+import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
-  const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
   return (
     <div className="w-full  bg-white rounded-lg shadow-lg p-3 relative cursor-pointer">
-      <img
-        src={`${product.image_Url && product?.image_Url[0]?.url}`}
-        alt=""
-        className="w-full h-[150px] object-contain"
-      />
+      <Link to={`/product/${product.id}`}>
+        <img
+          src={`${product.image_Url && product?.image_Url[0]?.url}`}
+          alt=""
+          className="w-full h-[150px] object-contain cursor-pointer"
+        />
+      </Link>
       <h5 className="text-blue-400 font-semibold">{product.shop.name}</h5>
 
-      <h4 className="py-3 font-[500]">
-        {product.name.length > 40
-          ? product.name.slice(0, 40) + "..."
-          : product.name}
-      </h4>
+      <Link to={`/product/${product.id}`}>
+        <h4 className="py-3 font-[500] cursor-pointer">
+          {product.name.length > 40
+            ? product.name.slice(0, 40) + "..."
+            : product.name}
+        </h4>
+      </Link>
 
       <div className="flex">
         <AiFillStar className="mr-2 cursor-pointer" size={20} color="#F6BA00" />
@@ -51,32 +54,15 @@ function ProductCard({ product }) {
       </div>
 
       {/* Side Options */}
-      {click ? (
-        <AiFillHeart
-          className="absolute top-5 right-2 cursor-pointer"
-          size={22}
-          onClick={() => setClick((prev) => !prev)}
-          title="Remove From Wishlist"
-          color="red"
-        />
-      ) : (
-        <AiOutlineHeart
-          className="absolute top-5 right-2 cursor-pointer"
-          size={22}
-          onClick={() => setClick((prev) => !prev)}
-          title="Add To Wishlist"
-          color="#333"
-        />
-      )}
       <AiOutlineEye
-        className="absolute top-14 right-2 cursor-pointer"
+        className="absolute top-4 right-2 cursor-pointer"
         size={22}
         onClick={() => setOpen((prev) => !prev)}
         title="Quick View"
         color="#333"
       />
       <AiOutlineHeart
-        className="absolute top-24 right-2 cursor-pointer"
+        className="absolute top-14 right-2 cursor-pointer"
         size={25}
         // onClick={() => setClick((prev) => !prev)}
         title="Add To Cart"

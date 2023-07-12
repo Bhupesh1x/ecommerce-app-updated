@@ -86,11 +86,13 @@ function Header() {
             onClick={handleOpenCart}
           />
           {currUser ? (
-            <img
-              src={currUser.avatar}
-              alt=""
-              className="h-[25px] w-[25px] object-cover rounded-full cursor-pointer"
-            />
+            <Link to="/profile">
+              <img
+                src={currUser.avatar}
+                alt=""
+                className="h-[25px] w-[25px] object-cover rounded-full cursor-pointer"
+              />
+            </Link>
           ) : (
             <CgProfile size={25} className="text-gray-500 cursor-pointer" />
           )}

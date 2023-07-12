@@ -16,7 +16,7 @@ function Hero() {
             <br />
             Home Decoration
           </h1>
-          <p class="pt-5 text-[16px]  font-[400] text-[#000000ba]">
+          <p className="pt-5 text-[16px]  font-[400] text-[#000000ba]">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae,
             assumenda? Quisquam itaque <br /> exercitationem labore vel, dolore
             quidem asperiores, laudantium temporibus soluta optio consequatur{" "}
