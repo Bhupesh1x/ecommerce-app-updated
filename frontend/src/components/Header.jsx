@@ -7,11 +7,14 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { getCurrUser } from "../utils/getUser";
 import Cart from "./Cart.jsx";
+import { RxCross1 } from "react-icons/rx";
+import Navbar from "./Navbar";
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [openCart, setOpenCart] = useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const currUser = getCurrUser();
 
   const handleSearchChange = (e) => {
@@ -39,12 +42,18 @@ function Header() {
   return (
     <nav className="sticky top-0 z-50 bg-slate-50 shadow-sm">
       <div className="container flex items-center justify-between py-4 px-6">
-        <Link to="/">
+        <Link to="/" className="hidden md:inline">
           <img
             src="https://shopo.quomodothemes.website/assets/images/logo.svg"
             alt=""
           />
         </Link>
+        <img
+          src="https://img.icons8.com/material-rounded/24/menu--v1.png"
+          alt=""
+          className="cursor-pointer inline md:hidden"
+          onClick={() => setOpenMobileMenu(true)}
+        />
 
         <div className="relative bg-gray-100 flex items-center border border-gray-400 rounded-md px-2 md:px-4 py-1 ">
           <input
@@ -83,8 +92,7 @@ function Header() {
             <IoIosArrowForward className=" inline" />
           </button>
           <AiOutlineShoppingCart
-            size={25}
-            className="text-gray-500 cursor-pointer"
+            className="text-gray-500 cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
             onClick={handleOpenCart}
           />
           {currUser ? (
@@ -92,18 +100,39 @@ function Header() {
               <img
                 src={currUser?.avatar}
                 alt=""
-                className="h-[25px] w-[25px] object-cover rounded-full cursor-pointer"
+                className="h-[25px] w-[25px] md:h-[30px] md:w-[30px] object-cover rounded-full cursor-pointer"
               />
             </Link>
           ) : (
             <Link to="/login">
-              <CgProfile size={25} className="text-gray-500 cursor-pointer" />
+              <CgProfile className="text-gray-500 cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]" />
             </Link>
           )}
         </div>
 
         {/* Cart Model */}
         {openCart ? <Cart setOpenCart={setOpenCart} open={openCart} /> : null}
+        {openMobileMenu ? (
+          <div className="fixed top-0 left-0 bg-white w-[45%] md:w-[30%] shadow-md h-screen px-4 py-2 z-20">
+            <div className="flex items-center justify-between my-2">
+              <img
+                src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+                alt=""
+                className="w-[50%] object-contain"
+              />
+              <RxCross1
+                size={20}
+                onClick={() => setOpenMobileMenu(false)}
+                className="cursor-pointer"
+              />
+            </div>
+            <Navbar isColumn={true} />
+            <button className="bg-black text-white px-4 py-2 rounded-lg w-full my-6">
+              <span className="inline">Become seller</span>{" "}
+              <IoIosArrowForward className=" inline" />
+            </button>
+          </div>
+        ) : null}
       </div>
     </nav>
   );
