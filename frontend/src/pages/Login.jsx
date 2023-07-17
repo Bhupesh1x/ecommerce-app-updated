@@ -6,7 +6,7 @@ import { serverUrl } from "../utils/uploadFile";
 import { toast } from "react-hot-toast";
 import { getCurrUser } from "../utils/getUser";
 
-function Login() {
+function Login({ isShop }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
@@ -20,8 +20,11 @@ function Login() {
       email,
       password,
     };
+    const url = isShop
+      ? `${serverUrl}/shop/login-shop`
+      : `${serverUrl}/user/login-user`;
     try {
-      const result = await axios.post(`${serverUrl}/user/login-user`, data, {
+      const result = await axios.post(url, data, {
         withCredentials: true,
       });
       localStorage.setItem("ecommerceUser", JSON.stringify(result.data.user));
@@ -37,10 +40,10 @@ function Login() {
   }
 
   useEffect(() => {
-    if (currUser) {
+    if (currUser && !isShop) {
       navigate("/");
     }
-  }, [currUser, navigate]);
+  }, [currUser, isShop, navigate]);
 
   return (
     <div className="h-[100vh]  flex flex-col items-center justify-center">
@@ -49,7 +52,7 @@ function Login() {
         className="bg-white w-[80%] md:w-[40%] lg:w-[30%] px-8 py-4 rounded-md shadow-md"
       >
         <h1 className="text-2xl font-semibold my-4 text-center">
-          Login To Your Account
+          {`Login To Your ${isShop ? "Shop" : "Account"}`}
         </h1>
         <p className="font-semibold my-1">Email Address</p>
         <input
@@ -104,7 +107,7 @@ function Login() {
         </button>
         <p className="my-4">
           Not have a account?{" "}
-          <Link to="/sign-up">
+          <Link to={isShop ? "/shop-create" : "/sign-up"}>
             <span className="text-blue-500 font-semibold cursor-pointer">
               Sign Up
             </span>

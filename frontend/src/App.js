@@ -9,9 +9,12 @@ import {
   EventsPage,
   FaqPage,
   ProfilePage,
+  ShopCreatePage,
 } from "./Routes.js";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./ProtectedRoute.js";
+import ShopProtectedRoute from "./ShopProtectedRoute.js";
+import { ShopHomePage } from "./ShopRoutes.js";
 
 function App() {
   return (
@@ -31,6 +34,16 @@ function App() {
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>
+          }
+        />
+        <Route path="/shop-create" element={<ShopCreatePage />} />
+        <Route path="/shop-login" element={<Login isShop={true} />} />
+        <Route
+          path="/shop"
+          element={
+            <ShopProtectedRoute>
+              <ShopHomePage />
+            </ShopProtectedRoute>
           }
         />
       </Routes>

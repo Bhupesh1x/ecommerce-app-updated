@@ -87,10 +87,12 @@ function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="bg-black text-white px-2 md:px-4 py-1 md:py-2 rounded-lg hidden md:inline">
-            <span className="inline">Become seller</span>{" "}
-            <IoIosArrowForward className=" inline" />
-          </button>
+          <Link to="/shop-create">
+            <button className="bg-black text-white px-2 md:px-4 py-1 md:py-2 rounded-lg hidden md:inline">
+              <span className="inline">Become seller</span>{" "}
+              <IoIosArrowForward className=" inline" />
+            </button>
+          </Link>
           <AiOutlineShoppingCart
             className="text-gray-500 cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
             onClick={handleOpenCart}
@@ -127,10 +129,12 @@ function Header() {
               />
             </div>
             <Navbar isColumn={true} />
-            <button className="bg-black text-white px-4 py-2 rounded-lg w-full my-6">
-              <span className="inline">Become seller</span>{" "}
-              <IoIosArrowForward className=" inline" />
-            </button>
+            <Link to="/shop-create">
+              <button className="bg-black text-white px-4 py-2 rounded-lg w-full my-6">
+                <span className="inline">Become seller</span>{" "}
+                <IoIosArrowForward className=" inline" />
+              </button>
+            </Link>
           </div>
         ) : null}
       </div>

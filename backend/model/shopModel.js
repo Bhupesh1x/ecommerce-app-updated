@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const shopSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please enter your name!"],
@@ -15,31 +15,20 @@ const userSchema = new mongoose.Schema({
     minLength: [4, "Password should be greater than 4 characters"],
     select: false,
   },
-  addresses: [
-    {
-      country: {
-        type: String,
-      },
-      city: {
-        type: String,
-      },
-      address1: {
-        type: String,
-      },
-      address2: {
-        type: String,
-      },
-      zipCode: {
-        type: Number,
-      },
-      addressType: {
-        type: String,
-      },
-    },
-  ],
+  desc: {
+    type: String,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  zipCode: {
+    type: Number,
+    required: true,
+  },
   role: {
     type: String,
-    default: "user",
+    default: "Seller",
   },
   avatar: {
     type: String,
@@ -48,8 +37,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  resetPasswordToken: String,
-  resetPasswordTime: Date,
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Shop", shopSchema);
