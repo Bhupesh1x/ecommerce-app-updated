@@ -14,7 +14,11 @@ import {
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./routes/ProtectedRoute.js";
 import ShopProtectedRoute from "./routes/ShopProtectedRoute.js";
-import { ShopHomePage, ShopDashboardPage } from "./ShopRoutes.js";
+import {
+  ShopHomePage,
+  ShopDashboardPage,
+  ShopCreateProductPage,
+} from "./ShopRoutes.js";
 
 function App() {
   return (
@@ -51,6 +55,14 @@ function App() {
           element={
             <ShopProtectedRoute>
               <ShopDashboardPage />
+            </ShopProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-create-product"
+          element={
+            <ShopProtectedRoute>
+              <ShopCreateProductPage />
             </ShopProtectedRoute>
           }
         />
