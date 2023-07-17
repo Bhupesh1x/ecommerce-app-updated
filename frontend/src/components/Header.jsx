@@ -102,7 +102,7 @@ function Header() {
               <img
                 src={currUser?.avatar}
                 alt=""
-                className="h-[25px] w-[25px] md:h-[30px] md:w-[30px] object-cover rounded-full cursor-pointer"
+                className="h-[25px] w-[25px] md:h-[30px] md:w-[30px] object-contain rounded-full cursor-pointer"
               />
             </Link>
           ) : (
@@ -129,7 +129,11 @@ function Header() {
               />
             </div>
             <Navbar isColumn={true} />
-            <Link to="/shop-create">
+            <Link
+              to={`${
+                currUser?.role === "Seller" ? "/dashboard" : "/shop-create"
+              }`}
+            >
               <button className="bg-black text-white px-4 py-2 rounded-lg w-full my-6">
                 <span className="inline">Become seller</span>{" "}
                 <IoIosArrowForward className=" inline" />

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import uploadFile, { serverUrl } from "../utils/uploadFile";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { getCurrUser } from "../utils/getUser";
 
 function ShopCreatePage() {
   const [name, setName] = useState("");
@@ -17,6 +18,7 @@ function ShopCreatePage() {
   const [avatar, setAvatar] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
+  const currUser = getCurrUser();
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
@@ -60,6 +62,14 @@ function ShopCreatePage() {
       });
     }
   }
+
+  useEffect(() => {
+    if (currUser && !currUser.role === "Seller") {
+      navigate("/");
+    } else if (currUser && currUser.role === "Seller") {
+      navigate("/dashboard");
+    }
+  }, [currUser, navigate]);
 
   return (
     <div className="h-[100vh]  flex flex-col items-center justify-center">

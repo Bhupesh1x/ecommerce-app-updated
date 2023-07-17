@@ -42,6 +42,8 @@ function Login({ isShop }) {
   useEffect(() => {
     if (currUser && !isShop) {
       navigate("/");
+    } else if (currUser && isShop) {
+      navigate("/dashboard");
     }
   }, [currUser, isShop, navigate]);
 
