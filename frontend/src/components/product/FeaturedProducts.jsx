@@ -1,5 +1,5 @@
 import React from "react";
-import { productData } from "../static/data";
+import { productData } from "../../static/data";
 import ProductCard from "./ProductCard";
 
 function FeaturedProducts() {

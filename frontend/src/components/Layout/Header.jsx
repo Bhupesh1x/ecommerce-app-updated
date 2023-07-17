@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
-import { productData } from "../static/data";
+import { productData } from "../../static/data";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import { getCurrUser } from "../utils/getUser";
-import Cart from "./Cart.jsx";
+import { getCurrUser } from "../../utils/getUser";
+import Cart from "../HomePage/Cart.jsx";
 import { RxCross1 } from "react-icons/rx";
 import Navbar from "./Navbar";
 
@@ -102,7 +102,7 @@ function Header() {
               <img
                 src={currUser?.avatar}
                 alt=""
-                className="h-[25px] w-[25px] md:h-[30px] md:w-[30px] object-contain rounded-full cursor-pointer"
+                className="h-[50px] w-[50px] object-contain rounded-full cursor-pointer"
               />
             </Link>
           ) : (

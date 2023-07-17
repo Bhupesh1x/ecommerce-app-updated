@@ -5,7 +5,7 @@ import {
   AiOutlineHeart,
   AiOutlineStar,
 } from "react-icons/ai";
-import ProductDetailsModal from "./product/ProductDetailsModal";
+import ProductDetailsModal from "./ProductDetailsModal";
 import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {

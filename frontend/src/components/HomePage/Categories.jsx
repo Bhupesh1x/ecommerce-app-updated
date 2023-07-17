@@ -1,5 +1,5 @@
 import React from "react";
-import { brandingData, categoriesData } from "../static/data";
+import { brandingData, categoriesData } from "../../static/data";
 import { useNavigate } from "react-router-dom";
 
 function Categories() {

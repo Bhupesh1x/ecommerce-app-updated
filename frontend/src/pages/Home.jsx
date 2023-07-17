@@ -1,13 +1,13 @@
 import React from "react";
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import Categories from "../components/Categories";
-import BestDeals from "../components/BestDeals";
-import FeaturedProducts from "../components/FeaturedProducts";
-import Events from "../components/Events";
-import Sponsored from "../components/Sponsored";
-import Footer from "../components/Footer";
+import Events from "../components/HomePage/Events";
+import FeaturedProducts from "../components/product/FeaturedProducts";
+import Header from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
+import Footer from "../components/Layout/Footer";
+import Hero from "../components/HomePage/Hero";
+import Categories from "../components/HomePage/Categories";
+import BestDeals from "../components/HomePage/BestDeals";
+import Sponsored from "../components/HomePage/Sponsored";
 
 function Home() {
   return (

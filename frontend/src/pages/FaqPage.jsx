@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Faq from "../components/Faq.jsx";
+import React from "react";
 import { faqData } from "../static/data";
+import Header from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
+import Footer from "../components/Layout/Footer.jsx";
+import Faq from "../components/HomePage/Faq";
 
 function FaqPage() {
   return (

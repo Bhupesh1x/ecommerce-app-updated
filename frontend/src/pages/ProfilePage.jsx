@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
+import Header from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
 import ProfileSidebar from "../components/Profile/ProfileSidebar";
 import ProfileDetails from "../components/Profile/ProfileDetails";
 import { useState } from "react";

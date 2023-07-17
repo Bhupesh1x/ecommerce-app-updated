@@ -10,10 +10,10 @@ import {
   FaqPage,
   ProfilePage,
   ShopCreatePage,
-} from "./Routes.js";
+} from "./routes/Routes.js";
 import { Toaster } from "react-hot-toast";
-import ProtectedRoute from "./ProtectedRoute.js";
-import ShopProtectedRoute from "./ShopProtectedRoute.js";
+import ProtectedRoute from "./routes/ProtectedRoute.js";
+import ShopProtectedRoute from "./routes/ShopProtectedRoute.js";
 import { ShopHomePage, ShopDashboardPage } from "./ShopRoutes.js";
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
         <Route path="/shop-create" element={<ShopCreatePage />} />
         <Route path="/shop-login" element={<Login isShop={true} />} />
         <Route
-          path="/shop"
+          path="/shop/:id"
           element={
             <ShopProtectedRoute>
               <ShopHomePage />

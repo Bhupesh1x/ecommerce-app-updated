@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { productData } from "../static/data";
+import { productData } from "../../static/data";
 
 function RelatedProduct({ productDetails }) {
   const [data, setData] = useState(null);

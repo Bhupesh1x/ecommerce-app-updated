@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { productData } from "../static/data";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import Header from "../components/Header";
-import RelatedProduct from "../components/RelatedProduct.jsx";
+import Footer from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
+import Header from "../components/Layout/Header";
+import RelatedProduct from "../components/product/RelatedProduct";
 
 const tabsInfo = [
   {

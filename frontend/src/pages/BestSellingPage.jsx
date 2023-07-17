@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { productData } from "../static/data";
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/product/ProductCard";
+import Header from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
 
 function BestSellingPage() {
   const [data, setData] = useState([]);

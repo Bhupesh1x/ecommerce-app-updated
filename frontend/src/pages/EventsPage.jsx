@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Header from "../components/Header";
-import EventCard from "../components/EventCard";
+import Header from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
+import EventCard from "../components/HomePage/EventCard";
 
 function EventsPage() {
   return (

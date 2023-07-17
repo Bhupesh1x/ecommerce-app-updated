@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { productData } from "../static/data";
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
-import ProductCard from "../components/ProductCard";
+import Header from "../components/Layout/Header";
+import Navbar from "../components/Layout/Navbar";
+import ProductCard from "../components/product/ProductCard";
 
 function ProductsPage() {
   const [searchParams] = useSearchParams();

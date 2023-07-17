@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { categoriesData, navItems } from "../static/data";
+import { categoriesData, navItems } from "../../static/data";
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar({ activeNo, isColumn }) {
