@@ -81,9 +81,10 @@ const sidebarData = [
 function DashboardSidebar({ active, setActive }) {
   return (
     <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-3">
-      {sidebarData.map((sidebar) => (
+      {sidebarData.map((sidebar, index) => (
         <Link
           to={sidebar.link}
+          key={index}
           className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[1.6rem]"
         >
           <sidebar.Icon
@@ -93,7 +94,7 @@ function DashboardSidebar({ active, setActive }) {
           <span
             className={`pl-3 ${
               active === sidebar.id ? "text-[red]" : ""
-            } hidden md:block `}
+            } hidden md:block md:text-sm lg:text-base`}
           >
             {sidebar.title}
           </span>
