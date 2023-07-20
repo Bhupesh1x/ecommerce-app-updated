@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
 const shopRoutes = require("./routes/shopRoutes");
 const productRoutes = require("./routes/productRoutes");
+const eventRoutes = require("./routes/eventRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -26,6 +27,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 app.use("/api/user", userRoutes);
 app.use("/api/shop", shopRoutes);
 app.use("/api/product", productRoutes);
+app.use("/api/event", eventRoutes);
 
 function connectDB() {
   mongoose
