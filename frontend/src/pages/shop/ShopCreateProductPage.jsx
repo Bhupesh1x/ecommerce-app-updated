@@ -1,15 +1,15 @@
 import React from "react";
 import DashboardHeader from "../../components/shop/dashboard/DashboardHeader";
 import DashboardSidebar from "../../components/shop/dashboard/DashboardSidebar";
-import CreateProduct from "../../components/product/CreateProduct";
+import CreateProductOrEvent from "../../components/product/CreateProductOrEvent";
 
-function ShopCreateProductPage() {
+function ShopCreateProductPage({ isEvent }) {
   return (
     <div>
       <DashboardHeader />
       <div className="container px-6 flex gap-8 py-6">
-        <DashboardSidebar active={4} />
-        <CreateProduct />
+        <DashboardSidebar active={isEvent ? 6 : 4} />
+        <CreateProductOrEvent isEvent={isEvent} />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getCurrUser } from "../../utils/getUser";
 
-function CreateProduct() {
+function CreateProductOrEvent({ isEvent }) {
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -18,6 +18,24 @@ function CreateProduct() {
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
   const currUser = getCurrUser();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const today = new Date().toISOString().slice(0, 10);
+  const minEndDate = startDate
+    ? new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10)
+    : "";
+
+  const handleStartDateChange = (e) => {
+    const startDate = new Date(e.target.value);
+    setStartDate(startDate);
+  };
+
+  const handleEndDateChange = (e) => {
+    const endDate = new Date(e.target.value);
+    setEndDate(endDate);
+  };
 
   async function handleUpload(e) {
     setIsUploading(true);
@@ -34,7 +52,8 @@ function CreateProduct() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const notification = () => toast("Creating new product...");
+    const notification = () =>
+      toast(`Creating new ${isEvent ? "event" : "product"}...`);
     try {
       const data = {
         name,
@@ -48,20 +67,31 @@ function CreateProduct() {
         shopId: currUser?._id,
       };
 
+      const payload = !isEvent
+        ? data
+        : { ...data, start_date: startDate, end_date: endDate };
+
+      const url = !isEvent
+        ? `${serverUrl}/product/create-product`
+        : `${serverUrl}/event/create-event`;
+
       if (isUploading) {
         return toast.error("Please wait for image to upload", {
           id: "Uplaoding",
         });
       }
 
-      await axios.post(`${serverUrl}/product/create-product`, data, {
+      await axios.post(url, payload, {
         withCredentials: true,
       });
-      toast.success("New Product created sucessfully", {
-        id: notification,
-      });
+      toast.success(
+        `New ${isEvent ? "event" : "product"} created sucessfully`,
+        {
+          id: notification,
+        }
+      );
 
-      navigate("/dashboard");
+      navigate(`${isEvent ? "/dashboard-events" : "/dashboard"}`);
     } catch (error) {
       toast.error(error?.response?.data, {
         id: notification,
@@ -71,7 +101,9 @@ function CreateProduct() {
 
   return (
     <div className="w-[90%] md:w-[70%] lg:w-[50%] bg-white shadow-md border border-gray-300 rounded-md p-4 mx-auto max-h-[82vh] overflow-y-scroll">
-      <h1 className="text-center text-xl font-semibold mb-3">Create Product</h1>
+      <h1 className="text-center text-xl font-semibold mb-3">
+        Create {isEvent ? "Event" : "Product"}
+      </h1>
       <form onSubmit={handleSubmit}>
         <p className="font-semibold my-1">
           Name <span className="ml-2 text-red-500">*</span>
@@ -183,6 +215,38 @@ function CreateProduct() {
               />
             ))}
         </div>
+        {isEvent ? (
+          <>
+            <p className="font-semibold my-1 mt-3">
+              Event Start Date <span className="ml-2 text-red-500">*</span>
+            </p>
+            <input
+              className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+              required
+              type="date"
+              name="price"
+              id="start-date"
+              value={startDate ? startDate.toISOString().slice(0, 10) : ""}
+              onChange={handleStartDateChange}
+              min={today}
+              placeholder="Enter your event product stock..."
+            />
+            <p className="font-semibold my-1 mt-3">
+              Event End Date <span className="ml-2 text-red-500">*</span>
+            </p>
+            <input
+              className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+              required
+              type="date"
+              name="price"
+              id="end-date"
+              value={endDate ? endDate.toISOString().slice(0, 10) : ""}
+              onChange={handleEndDateChange}
+              min={minEndDate}
+              placeholder="Enter your event product stock..."
+            />
+          </>
+        ) : null}
 
         <button
           type="submit"
@@ -195,4 +259,4 @@ function CreateProduct() {
   );
 }
 
-export default CreateProduct;
+export default CreateProductOrEvent;

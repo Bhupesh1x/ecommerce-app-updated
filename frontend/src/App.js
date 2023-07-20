@@ -75,6 +75,14 @@ function App() {
             </ShopProtectedRoute>
           }
         />
+        <Route
+          path="/dashboard-create-event"
+          element={
+            <ShopProtectedRoute>
+              <ShopCreateProductPage isEvent={true} />
+            </ShopProtectedRoute>
+          }
+        />
       </Routes>
       <Toaster />
     </div>
