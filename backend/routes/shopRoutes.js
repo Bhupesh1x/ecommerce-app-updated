@@ -2,7 +2,7 @@ const express = require("express");
 const Shop = require("../model/shopModel");
 const bcrypt = require("bcrypt");
 const sendToken = require("../utils/sendToken");
-const { isAuthenticated } = require("../middleware/auth");
+const { isSellerAuthenticated } = require("../middleware/sellerAuth");
 
 const routes = express.Router();
 
@@ -52,6 +52,20 @@ routes.post("/login-shop", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
+  }
+});
+
+routes.get("/logout", isSellerAuthenticated, async (req, res) => {
+  try {
+    res.cookie("ecommerceToken", null, {
+      httpOnly: true,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Log out successful!",
+    });
+  } catch (error) {
+    return res.status(500).send(error);
   }
 });
 

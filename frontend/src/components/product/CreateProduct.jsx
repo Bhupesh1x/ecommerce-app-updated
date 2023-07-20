@@ -54,14 +54,9 @@ function CreateProduct() {
         });
       }
 
-      const result = await axios.post(
-        `${serverUrl}/product/create-product`,
-        data,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(result);
+      await axios.post(`${serverUrl}/product/create-product`, data, {
+        withCredentials: true,
+      });
       toast.success("New Product created sucessfully", {
         id: notification,
       });
@@ -93,7 +88,9 @@ function CreateProduct() {
         <p className="font-semibold my-1 mt-3">
           Description <span className="ml-2 text-red-500">*</span>
         </p>
-        <input
+        <textarea
+          cols="30"
+          rows="8"
           type="text"
           className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
           required

@@ -87,18 +87,27 @@ function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link to="/shop-create">
-            <button className="bg-black text-white px-2 md:px-4 py-1 md:py-2 rounded-lg hidden md:inline">
-              <span className="inline">Become seller</span>{" "}
-              <IoIosArrowForward className=" inline" />
-            </button>
-          </Link>
+          {currUser.role !== "Seller" && (
+            <Link to="/shop-create">
+              <button className="bg-black text-white px-2 md:px-4 py-1 md:py-2 rounded-lg hidden md:inline">
+                <span className="inline">Become seller</span>{" "}
+                <IoIosArrowForward className=" inline" />
+              </button>
+            </Link>
+          )}
+
           <AiOutlineShoppingCart
             className="text-gray-500 cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
             onClick={handleOpenCart}
           />
           {currUser ? (
-            <Link to="/profile">
+            <Link
+              to={
+                currUser.role !== "Seller"
+                  ? "/profile"
+                  : `/shop/${currUser._id}`
+              }
+            >
               <img
                 src={currUser?.avatar}
                 alt=""

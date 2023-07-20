@@ -18,6 +18,7 @@ import {
   ShopHomePage,
   ShopDashboardPage,
   ShopCreateProductPage,
+  ShopAllProducts,
 } from "./ShopRoutes.js";
 
 function App() {
@@ -63,6 +64,14 @@ function App() {
           element={
             <ShopProtectedRoute>
               <ShopCreateProductPage />
+            </ShopProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-products"
+          element={
+            <ShopProtectedRoute>
+              <ShopAllProducts />
             </ShopProtectedRoute>
           }
         />

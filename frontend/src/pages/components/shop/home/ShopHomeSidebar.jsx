@@ -1,9 +1,28 @@
 import React from "react";
 import { getCurrUser } from "../../../../utils/getUser";
+import { toast } from "react-hot-toast";
+import { serverUrl } from "../../../../utils/uploadFile";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function DashboardSidebar({ active, setActive }) {
   const currUser = getCurrUser();
-  console.log(currUser);
+  const navigate = useNavigate();
+
+  async function logoutHandler() {
+    try {
+      const result = await axios.get(`${serverUrl}/shop/logout`, {
+        withCredentials: true,
+      });
+
+      localStorage.clear("ecommerceUser");
+      toast.success(result.data.message);
+      navigate("/shop-login");
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
+
   return (
     <div className="w-[25%] h-[90vh] bg-white shadow-md border border-gray-300 rounded-md p-3 sticky left-0 top-[1.6rem] md:top-10">
       <div className="w-full flex items-center justify-center">
@@ -36,7 +55,10 @@ function DashboardSidebar({ active, setActive }) {
       <button className="bg-black text-white mt-12 px-4 py-2 rounded-lg block w-full">
         Edit Shop
       </button>
-      <button className="bg-black text-white mt-4 px-4 py-2 rounded-lg block w-full">
+      <button
+        onClick={logoutHandler}
+        className="bg-black text-white mt-4 px-4 py-2 rounded-lg block w-full"
+      >
         Log Out
       </button>
     </div>
