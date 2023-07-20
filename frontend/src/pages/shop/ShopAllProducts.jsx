@@ -1,15 +1,15 @@
 import React from "react";
 import DashboardHeader from "../../components/shop/dashboard/DashboardHeader";
 import DashboardSidebar from "../../components/shop/dashboard/DashboardSidebar";
-import AllShopProducts from "../../components/shop/dashboard/AllShopProducts";
+import AllShopProductsOrEvents from "../../components/shop/dashboard/AllShopProductsOrEvents";
 
-function ShopAllProducts() {
+function ShopAllProducts({ isEvent }) {
   return (
     <div>
       <DashboardHeader />
       <div className="container px-6 flex gap-8 py-6">
-        <DashboardSidebar active={3} />
-        <AllShopProducts />
+        <DashboardSidebar active={isEvent ? 5 : 3} />
+        <AllShopProductsOrEvents isEvent={isEvent} />
       </div>
     </div>
   );

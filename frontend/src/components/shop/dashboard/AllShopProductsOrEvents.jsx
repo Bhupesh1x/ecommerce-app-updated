@@ -5,26 +5,34 @@ import axios from "axios";
 import { getCurrUser } from "../../../utils/getUser";
 import { toast } from "react-hot-toast";
 import { getAllProductsOfShop } from "../../../redux/productSlice";
+import { getAllEventsOfShop } from "../../../redux/eventSlice";
 import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-function AllShopProducts() {
+function AllShopProductsOrEvents({ isEvent }) {
   const dispatch = useDispatch();
   const user = getCurrUser();
   const navigate = useNavigate();
-  const shopAllProducts = useSelector((state) => state.productShop.value);
+  const shopAllProductsOrEvents = useSelector((state) =>
+    isEvent ? state.eventShop.value : state.productShop.value
+  );
 
-  async function getAllShopProducts() {
+  async function getAllShopProductsOrEvents() {
+    const url = !isEvent
+      ? `${serverUrl}/product/get-products-by-shop-id/${user._id}`
+      : `${serverUrl}/event/get-events-by-shop-id/${user._id}`;
+
     try {
-      const result = await axios.get(
-        `${serverUrl}/product/get-products-by-shop-id/${user._id}`,
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(getAllProductsOfShop(result.data));
+      const result = await axios.get(url, {
+        withCredentials: true,
+      });
+      if (isEvent) {
+        dispatch(getAllEventsOfShop(result.data));
+      } else {
+        dispatch(getAllProductsOfShop(result.data));
+      }
     } catch (error) {
       toast.error(error?.response?.data);
     }
@@ -32,24 +40,24 @@ function AllShopProducts() {
 
   async function handleDelete(id) {
     const notification = toast.loading("Deleting Your Product!");
+    const url = !isEvent
+      ? `${serverUrl}/product/delete-shop-product/${id}`
+      : `${serverUrl}/event/delete-shop-event/${id}`;
     try {
-      const result = await axios.delete(
-        `${serverUrl}/product/delete-shop-product/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const result = await axios.delete(url, {
+        withCredentials: true,
+      });
       toast.success(result.data, {
         id: notification,
       });
-      getAllShopProducts();
+      getAllShopProductsOrEvents();
     } catch (error) {
       toast.error(error?.response?.data);
     }
   }
 
   useEffect(() => {
-    getAllShopProducts();
+    getAllShopProductsOrEvents();
   }, []);
 
   function handleNavigate(product_name) {
@@ -125,8 +133,8 @@ function AllShopProducts() {
 
   const row = [];
 
-  shopAllProducts &&
-    shopAllProducts.forEach((item) => {
+  shopAllProductsOrEvents &&
+    shopAllProductsOrEvents.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
@@ -149,4 +157,4 @@ function AllShopProducts() {
   );
 }
 
-export default AllShopProducts;
+export default AllShopProductsOrEvents;

@@ -111,7 +111,7 @@ function Header() {
               <img
                 src={currUser?.avatar}
                 alt=""
-                className="h-[50px] w-[50px] object-contain rounded-full cursor-pointer"
+                className="h-[50px] w-[50px] object-cover rounded-full cursor-pointer"
               />
             </Link>
           ) : (

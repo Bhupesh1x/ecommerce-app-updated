@@ -83,6 +83,14 @@ function App() {
             </ShopProtectedRoute>
           }
         />
+        <Route
+          path="/dashboard-events"
+          element={
+            <ShopProtectedRoute>
+              <ShopAllProducts isEvent={true} />
+            </ShopProtectedRoute>
+          }
+        />
       </Routes>
       <Toaster />
     </div>

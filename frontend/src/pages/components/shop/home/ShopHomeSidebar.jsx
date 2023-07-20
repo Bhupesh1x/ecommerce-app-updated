@@ -29,7 +29,7 @@ function DashboardSidebar({ active, setActive }) {
         <img
           src={currUser?.avatar}
           alt=""
-          className="h-[80px] w-[80px] md:h-[150px] md:w-[150px] object-contain rounded-full cursor-pointer border border-gray-400 p-1"
+          className="h-[80px] w-[80px] md:h-[150px] md:w-[150px] object-cover rounded-full cursor-pointer border border-gray-400 p-1"
         />
       </div>
       <p className="text-center font-semibold text-xl">{currUser?.name}</p>

@@ -74,7 +74,7 @@ function ProfileForm({ currUser }) {
         <img
           src={currUser?.avatar}
           alt=""
-          className="h-[150px] w-[150px] object-contain rounded-full cursor-pointer border-[3px] border-blue-600 hover:border-blue-400"
+          className="h-[150px] w-[150px] object-cover rounded-full cursor-pointer border-[3px] border-blue-600 hover:border-blue-400"
         />
       </div>
       <div className="flex flex-col items-center lg:flex-row gap-4">
