@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 const sendToken = require("../utils/sendToken");
 const { isAuthenticated } = require("../middleware/auth");
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.post("/create-user", async (req, res) => {
+router.post("/create-user", async (req, res) => {
   try {
     const isUserExist = await User.findOne({ email: req.body.email });
 
@@ -30,7 +30,7 @@ routes.post("/create-user", async (req, res) => {
   }
 });
 
-routes.post("/login-user", async (req, res) => {
+router.post("/login-user", async (req, res) => {
   const { email, password } = req.body;
   const passwordInfo = password.toString();
   try {
@@ -57,7 +57,7 @@ routes.post("/login-user", async (req, res) => {
 
 // Load User
 
-routes.get("/get-user", isAuthenticated, async (req, res) => {
+router.get("/get-user", isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -70,7 +70,7 @@ routes.get("/get-user", isAuthenticated, async (req, res) => {
   }
 });
 
-routes.get("/logout-user", isAuthenticated, async (req, res) => {
+router.get("/logout-user", isAuthenticated, async (req, res) => {
   try {
     res.cookie("ecommerceToken", null, {
       httpOnly: true,
@@ -84,4 +84,4 @@ routes.get("/logout-user", isAuthenticated, async (req, res) => {
   }
 });
 
-module.exports = routes;
+module.exports = router;

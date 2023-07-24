@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 const sendToken = require("../utils/sendToken");
 const { isSellerAuthenticated } = require("../middleware/sellerAuth");
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.post("/create-shop", async (req, res) => {
+router.post("/create-shop", async (req, res) => {
   try {
     const isShopExist = await Shop.findOne({ email: req.body.email });
 
@@ -30,7 +30,7 @@ routes.post("/create-shop", async (req, res) => {
   }
 });
 
-routes.post("/login-shop", async (req, res) => {
+router.post("/login-shop", async (req, res) => {
   const { email, password } = req.body;
   const passwordInfo = password.toString();
   try {
@@ -55,7 +55,7 @@ routes.post("/login-shop", async (req, res) => {
   }
 });
 
-routes.get("/logout", isSellerAuthenticated, async (req, res) => {
+router.get("/logout", isSellerAuthenticated, async (req, res) => {
   try {
     res.cookie("ecommerceToken", null, {
       httpOnly: true,
@@ -69,4 +69,4 @@ routes.get("/logout", isSellerAuthenticated, async (req, res) => {
   }
 });
 
-module.exports = routes;
+module.exports = router;

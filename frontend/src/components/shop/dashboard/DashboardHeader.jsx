@@ -19,7 +19,7 @@ function DashboardHeader() {
         </Link>
 
         <div className="flex items-center gap-3">
-          <Link to="/dashboard/cupouns" className="md:block hidden">
+          <Link to="/dashboard-cupouns" className="md:block hidden">
             <AiOutlineGift
               color="#555"
               size={30}

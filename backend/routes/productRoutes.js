@@ -4,9 +4,9 @@ const Product = require("../model/productModel");
 
 const { isSellerAuthenticated } = require("../middleware/sellerAuth");
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.post("/create-product", isSellerAuthenticated, async (req, res) => {
+router.post("/create-product", isSellerAuthenticated, async (req, res) => {
   try {
     const shop = await Shop.findById(req.body.shopId);
     if (!shop) {
@@ -23,7 +23,7 @@ routes.post("/create-product", isSellerAuthenticated, async (req, res) => {
   }
 });
 
-routes.get(
+router.get(
   "/get-products-by-shop-id/:id",
   isSellerAuthenticated,
   async (req, res) => {
@@ -36,7 +36,7 @@ routes.get(
   }
 );
 
-routes.delete(
+router.delete(
   "/delete-shop-product/:id",
   isSellerAuthenticated,
   async (req, res) => {
@@ -59,4 +59,4 @@ routes.delete(
   }
 );
 
-module.exports = routes;
+module.exports = router;
