@@ -1,8 +1,9 @@
 import React from "react";
-import { productData } from "../../static/data";
 import ProductCard from "./ProductCard";
+import { useSelector } from "react-redux";
 
 function FeaturedProducts() {
+  const productData = useSelector((state) => state.allProducts.value);
   return (
     <div className="my-12 container px-6">
       <h1 className="text-xl font-semibold pb-4">Featured Products</h1>

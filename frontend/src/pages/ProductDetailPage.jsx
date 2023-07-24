@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { productData } from "../static/data";
-import Footer from "../components/Layout/Header";
+import Footer from "../components/Layout/Footer";
 import Navbar from "../components/Layout/Navbar";
 import Header from "../components/Layout/Header";
 import RelatedProduct from "../components/product/RelatedProduct";
+import { useSelector } from "react-redux";
+import { serverUrl } from "../utils/uploadFile";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import Loader from "../components/Layout/Loader";
 
 const tabsInfo = [
   {
@@ -26,6 +30,7 @@ function ProductDetailPage() {
   const [productDetails, setProductDetails] = useState();
   const [selectedImage, setSelectedImage] = useState(0);
   const [count, setCount] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleDecrementCount() {
     if (count > 1) {
@@ -37,10 +42,30 @@ function ProductDetailPage() {
     setCount((prev) => prev + 1);
   }
 
+  async function getAllShopProductsOrEvents() {
+    setIsLoading(true);
+    try {
+      const result = await axios.get(
+        `${serverUrl}/product/get-product-by-id/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setProductDetails(result.data);
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(error?.response?.data);
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
-    const data = productData.filter((data) => data.id === parseInt(id));
-    setProductDetails(data[0]);
-  }, [id]);
+    getAllShopProductsOrEvents();
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (!productDetails) {
     return null;
@@ -54,7 +79,7 @@ function ProductDetailPage() {
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           {/* Images Container */}
           <div className="w-full md:w-[50%]">
-            <img src={productDetails?.image_Url[selectedImage].url} alt="" />
+            <img src={productDetails?.images[selectedImage]} alt="" />
 
             <div className="flex items-center gap-4 my-4 w-full">
               <div
@@ -63,7 +88,7 @@ function ProductDetailPage() {
                 } cursor-pointer flex-1`}
               >
                 <img
-                  src={productDetails?.image_Url[0].url}
+                  src={productDetails?.images[0]}
                   alt=""
                   onClick={() => setSelectedImage(0)}
                 />
@@ -74,7 +99,7 @@ function ProductDetailPage() {
                 } cursor-pointer flex-1`}
               >
                 <img
-                  src={productDetails?.image_Url[1].url}
+                  src={productDetails?.images[1]}
                   alt=""
                   onClick={() => setSelectedImage(1)}
                 />
@@ -88,7 +113,7 @@ function ProductDetailPage() {
             </p>
             <p className="text-gray-500">{productDetails?.description}</p>
             <p className="my-3 font-semibold text-xl">
-              Price : $ {productDetails.discount_price}
+              Price : $ {productDetails.discountPrice}
             </p>
             <div className="flex items-center">
               <button
@@ -111,7 +136,7 @@ function ProductDetailPage() {
 
             <div className="flex items-center gap-3">
               <img
-                src={productDetails.shop.shop_avatar.url}
+                src={productDetails?.shop?.avatar}
                 alt=""
                 className="h-[40px] w-[40px] rounded-full"
               />
@@ -205,7 +230,7 @@ function ProductDeailsInfo({ productDetails }) {
             <div className="w-[50%]">
               <div className="flex items-center gap-3">
                 <img
-                  src={productDetails.shop.shop_avatar.url}
+                  src={productDetails?.shop?.avatar}
                   alt=""
                   className="h-[40px] w-[40px] rounded-full"
                 />

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { productData } from "../../static/data";
+import { useSelector } from "react-redux";
 
 function RelatedProduct({ productDetails }) {
   const [data, setData] = useState(null);
+  const productData = useSelector((state) => state.allProducts.value);
 
   useEffect(() => {
     const data = productData.filter(
       (product) => product.category === productDetails.category
     );
     setData(data);
-  }, [productData]);
+  }, [productData, productDetails.category]);
 
   return (
     <div className="my-12 container px-6">

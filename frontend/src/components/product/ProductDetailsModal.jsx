@@ -26,13 +26,13 @@ function ProductDetailsModal({ setOpen, product }) {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-[50%]">
             <img
-              src={product.image_Url[0]?.url}
+              src={product.images[0]}
               alt=""
               className="h-[60%] w-[60%] mx-auto"
             />
             <div className="flex items-center gap-3">
               <img
-                src={product.shop.shop_avatar.url}
+                src={product?.shop?.avatar}
                 alt=""
                 className="h-[40px] w-[40px] rounded-full"
               />
@@ -49,7 +49,7 @@ function ProductDetailsModal({ setOpen, product }) {
               Send Message
             </button>
 
-            <p className="text-red-600">({product.total_sell}) Sold out</p>
+            <p className="text-red-600">({product.sold_out}) Sold out</p>
           </div>
 
           <div className="w-full md:w-[50%]">
@@ -57,7 +57,7 @@ function ProductDetailsModal({ setOpen, product }) {
             <p className="text-base text-gray-500">{product.description}</p>
 
             <p className="my-3 font-semibold text-xl">
-              Price : $ {product.discount_price}
+              Price : $ {product.discountPrice}
             </p>
             <div className="flex items-center">
               <button

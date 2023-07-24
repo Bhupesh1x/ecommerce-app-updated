@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { productData } from "../../static/data";
 import ProductCard from "../product/ProductCard";
+import { useSelector } from "react-redux";
 
 function BestDeals() {
   const [data, setData] = useState([]);
+  const productData = useSelector((state) => state.allProducts.value);
 
   useEffect(() => {
     const allProductsData = productData ? [...productData] : [];

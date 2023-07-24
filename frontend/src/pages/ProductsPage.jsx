@@ -1,27 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { productData } from "../static/data";
 import Header from "../components/Layout/Header";
 import Navbar from "../components/Layout/Navbar";
 import ProductCard from "../components/product/ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { serverUrl } from "../utils/uploadFile";
+import { getAllProducts } from "../redux/allProductsSlice";
+import { toast } from "react-hot-toast";
 
 function ProductsPage() {
   const [searchParams] = useSearchParams();
   const categoryData = searchParams.get("category");
   const [data, setData] = useState([]);
+  const productData = useSelector((state) => state.allProducts.value);
+  const dispatch = useDispatch();
+
+  async function getAllProductsData() {
+    try {
+      const result = await axios.get(`${serverUrl}/product/all-products`, {
+        withCredentials: true,
+      });
+      dispatch(getAllProducts(result.data));
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
 
   useEffect(() => {
+    if (!productData.length) {
+      getAllProductsData();
+    }
+  }, [productData.length]);
+
+  useEffect(() => {
+    const allProductsData = productData ? [...productData] : [];
     if (categoryData === null) {
       const data =
-        productData && productData.sort((a, b) => a.total_sell - b.total_sell);
+        allProductsData &&
+        allProductsData.sort((a, b) => a.sold_out - b.sold_out);
       setData(data);
     } else {
       const data =
-        productData &&
-        productData.filter((data) => data.category === categoryData);
+        allProductsData &&
+        allProductsData.filter((data) => data.category === categoryData);
       setData(data);
     }
-  }, [categoryData]);
+  }, [categoryData, productData]);
 
   return (
     <div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
-import { productData } from "../../static/data";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
@@ -9,6 +8,7 @@ import { getCurrUser } from "../../utils/getUser";
 import Cart from "../HomePage/Cart.jsx";
 import { RxCross1 } from "react-icons/rx";
 import Navbar from "./Navbar";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,6 +16,7 @@ function Header() {
   const [openCart, setOpenCart] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const currUser = getCurrUser();
+  const productData = useSelector((state) => state.allProducts.value);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -33,7 +34,7 @@ function Header() {
         );
       setSearchData(filteredProducts);
     }
-  }, [searchTerm]);
+  }, [productData, searchTerm]);
 
   function handleOpenCart() {
     setOpenCart(true);
@@ -64,26 +65,22 @@ function Header() {
             placeholder="Search Product..."
           />
           <AiOutlineSearch size={25} className="cursor-pointer text-gray-500" />
-
-          {searchData?.length
-            ? searchData?.map((data, index) => (
-                <div
-                  key={index}
-                  className="absolute left-0 top-9 bg-slate-50 border border-gray-300 rounded-md shadow-sm-2 z-[9] p-4"
-                >
-                  <Link to={`/product/${data.name}`}>
-                    <div className="flex items-start my-2 cursor-pointer">
-                      <img
-                        src={`${data?.image_Url[0]?.url}`}
-                        alt=""
-                        className="w-[40px] h-[40px] mr-[10px]"
-                      />
-                      <p>{`${data.name.substring(0, 30)}...`}</p>
-                    </div>
-                  </Link>
-                </div>
-              ))
-            : null}
+          {searchData?.length ? (
+            <div className="absolute left-0 top-9 bg-slate-50 border border-gray-300 rounded-md shadow-sm-2 z-[9] p-4">
+              {searchData?.map((data, index) => (
+                <Link to={`/product/${data._id}`} key={index}>
+                  <div className="flex items-start my-2 cursor-pointer">
+                    <img
+                      src={`${data?.images[0]}`}
+                      alt=""
+                      className="w-[40px] h-[40px] mr-[10px]"
+                    />
+                    <p>{`${data.name.substring(0, 30)}...`}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <div className="flex items-center gap-3">
