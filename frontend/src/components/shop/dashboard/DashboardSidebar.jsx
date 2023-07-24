@@ -61,7 +61,7 @@ const sidebarData = [
   {
     id: 9,
     title: "Discount Codes",
-    link: "/dashboard-coupouns",
+    link: "/dashboard-coupons",
     Icon: AiOutlineGift,
   },
   {

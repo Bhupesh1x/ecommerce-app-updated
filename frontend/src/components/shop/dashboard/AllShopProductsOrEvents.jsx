@@ -145,7 +145,7 @@ function AllShopProductsOrEvents({ isEvent }) {
     });
 
   return (
-    <div className="w-[80%] bg-white shadow-md border border-gray-300 rounded-md p-4 mx-auto ">
+    <div className="w-[80%] bg-white shadow-md border border-gray-300 rounded-md p-4 mx-auto">
       <DataGrid
         rows={row}
         columns={columns}

@@ -19,6 +19,7 @@ import {
   ShopDashboardPage,
   ShopCreateProductPage,
   ShopAllProducts,
+  ShopAllCoupons,
 } from "./ShopRoutes.js";
 
 function App() {
@@ -88,6 +89,14 @@ function App() {
           element={
             <ShopProtectedRoute>
               <ShopAllProducts isEvent={true} />
+            </ShopProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-coupons"
+          element={
+            <ShopProtectedRoute>
+              <ShopAllCoupons />
             </ShopProtectedRoute>
           }
         />
