@@ -129,7 +129,7 @@ function ProductDetailPage() {
               {productDetails.discountPrice}$
             </p>
             <p className="text-red-600 my-2">
-              ({productDetails.stock}) In Stock
+              Currently In Stock : {productDetails.stock}
             </p>
             <div className="flex items-center">
               <button

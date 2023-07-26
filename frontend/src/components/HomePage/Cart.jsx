@@ -1,35 +1,25 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import { RxCross1 } from "react-icons/rx";
-
-const cartData = [
-  {
-    name: "Iphone 14 pro max 256 gb ssd and 8 gb ram silver colour",
-    description: "Iphone",
-    price: 999,
-  },
-  {
-    name: "Iphone 15 pro max 256 gb ssd and 8 gb ram silver colour",
-    description: "Iphone 1",
-    price: 899,
-  },
-  {
-    name: "Iphone 15 pro max 256 gb ssd and 8 gb ram silver colour",
-    description: "Iphone 1",
-    price: 899,
-  },
-  {
-    name: "Iphone 15 pro max 256 gb ssd and 8 gb ram silver colour",
-    description: "Iphone 1",
-    price: 899,
-  },
-];
+import { AiOutlineDelete } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "../../redux/cartSlice";
 
 function Cart({ setOpenCart }) {
+  const cartData = useSelector((state) => state.cart.value);
+
+  const totalPrice = useMemo(() => {
+    const price = cartData.reduce(
+      (acc, item) => acc + item.qty * item.discountPrice,
+      0
+    );
+    return price;
+  }, [cartData]);
+
   return (
-    <div className="fixed top-0 right-0 bg-white w-[75%] md:w-[30%] shadow-md h-screen px-4 py-2 z-20">
+    <div className="fixed top-0 right-0 bg-white w-[70%] md:w-[30%] lg:w-[25%] xl:w-[22%] shadow-md h-screen px-4 py-2 z-20">
       <div className="h-full relative">
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold mb-4">Cart Details</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-xl font-semibold">Cart Details</h1>
           <RxCross1
             size={20}
             onClick={() => setOpenCart(false)}
@@ -38,62 +28,56 @@ function Cart({ setOpenCart }) {
         </div>
 
         <div className="flex flex-col gap-3 h-full">
-          {cartData.map((cart, i) => (
-            <SingleCart key={i} data={cart} />
-          ))}
+          {cartData.length ? (
+            cartData.map((cart, i) => <SingleCart key={i} cart={cart} />)
+          ) : (
+            <p>Cart is empty Add product to cart!</p>
+          )}
         </div>
 
-        <button className="absolute bottom-4 w-full bg-black text-white mt-4 px-8 py-3 rounded-lg">
-          Checkout Now
+        <button
+          disabled={!cartData.length}
+          className="absolute bottom-4 w-full bg-black text-white mt-4 px-8 py-3 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          Checkout Now (USD${totalPrice})
         </button>
       </div>
     </div>
   );
 }
 
-function SingleCart({ data }) {
-  const [count, setCount] = useState(1);
+function SingleCart({ cart }) {
+  const dispatch = useDispatch();
 
-  function handleDecrementCount() {
-    if (count > 1) {
-      setCount((prev) => prev - 1);
-    }
-  }
-
-  function handleIncrementCount() {
-    setCount((prev) => prev + 1);
+  function handleRemoveFromCart(id) {
+    dispatch(removeFromCart(id));
   }
 
   return (
-    <div className="flex justify-between">
+    <div className="flex items-center justify-between">
       <img
-        src="https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg"
+        src={cart?.images[0]}
         alt=""
-        className="h-20 w-20 object-cover rounded-md"
+        className="h-20 w-20 object-contain rounded-md"
       />
 
       <div className="flex flex-col gap-1">
         <p className="font-semibold">{`${
-          data.name.length > 25 ? `${data.name.substring(0, 25)}...` : data.name
+          cart.name.length > 25
+            ? `${cart?.name.substring(0, 25)}...`
+            : cart?.name
         }`}</p>
-        <p>Price : {data.price * count}$</p>
+        <p>
+          Qty : {cart?.qty} | Price : {cart?.discountPrice * cart?.qty}$
+        </p>
       </div>
 
-      <div className="flex items-center">
-        <button
-          className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-3 py-1 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-          onClick={handleDecrementCount}
-        >
-          -
-        </button>
-        <p className="bg-gray-300 px-3 py-1">{count}</p>
-        <button
-          className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-r px-3 py-1 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-          onClick={handleIncrementCount}
-        >
-          +
-        </button>
-      </div>
+      <AiOutlineDelete
+        size={25}
+        className="cursor-pointer text-red-500"
+        title="Remove from cart"
+        onClick={() => handleRemoveFromCart(cart?._id)}
+      />
     </div>
   );
 }
