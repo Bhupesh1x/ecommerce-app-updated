@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import CenterModel from "../../model/CenterModel";
 import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-hot-toast";
 import { getCurrUser } from "../../../utils/getUser";
@@ -8,6 +7,7 @@ import axios from "axios";
 import { Button } from "@material-ui/core";
 import { AiOutlineDelete } from "react-icons/ai";
 import { DataGrid } from "@material-ui/data-grid";
+import Modal from "../../modal/Modal";
 
 function AllCoupons() {
   const [open, setOpen] = useState(false);
@@ -149,7 +149,7 @@ function AllCoupons() {
       </div>
 
       {open && (
-        <CenterModel>
+        <Modal>
           <RxCross1
             size={20}
             onClick={() => setOpen(false)}
@@ -212,7 +212,7 @@ function AllCoupons() {
               </button>
             </form>
           </>
-        </CenterModel>
+        </Modal>
       )}
     </div>
   );

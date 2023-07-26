@@ -13,7 +13,7 @@ function EventCard({ event }) {
         <h1 className="text-xl font-semibold">{event?.name}</h1>
         <p className="my-2 text-gray-600">{event?.description}</p>
         <div className="flex items-center justify-between my-3">
-          <p className="font-semibold  text-xl">
+          <p className="font-semibold text-xl">
             Price :{" "}
             <span className="text-red-500 line-through">
               {event?.originalPrice}$

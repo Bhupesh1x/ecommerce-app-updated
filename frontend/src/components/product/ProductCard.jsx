@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import {
   AiFillStar,
   AiOutlineEye,
-  AiOutlineHeart,
+  AiOutlineShoppingCart,
   AiOutlineStar,
 } from "react-icons/ai";
 import ProductDetailsModal from "./ProductDetailsModal";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
 
 function ProductCard({ product }) {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  function handleAddToCart(product) {
+    dispatch(addToCart(product));
+  }
+
   return (
     <div className="w-full  bg-white rounded-lg shadow-lg p-3 relative cursor-pointer border border-gray-300 hover:border-gray-400">
       <Link to={`/product/${product._id}`}>
@@ -66,10 +74,10 @@ function ProductCard({ product }) {
         title="Quick View"
         color="#333"
       />
-      <AiOutlineHeart
+      <AiOutlineShoppingCart
         className="absolute top-14 right-2 cursor-pointer"
         size={25}
-        // onClick={() => setClick((prev) => !prev)}
+        onClick={() => handleAddToCart(product)}
         title="Add To Cart"
         color="#444"
       />

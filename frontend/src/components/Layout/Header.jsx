@@ -17,6 +17,7 @@ function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const currUser = getCurrUser();
   const productData = useSelector((state) => state.allProducts.value);
+  const cart = useSelector((state) => state.cart.value);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -92,11 +93,16 @@ function Header() {
               </button>
             </Link>
           )}
+          <div className="relative">
+            <AiOutlineShoppingCart
+              className="text-gray-500 cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
+              onClick={handleOpenCart}
+            />
+            <span className="absolute -top-2 -right-2 bg-blue-500 h-5 w-5 rounded-full flex items-center justify-center text-sm text-white font-semibold">
+              {cart.length}
+            </span>
+          </div>
 
-          <AiOutlineShoppingCart
-            className="text-gray-500 cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
-            onClick={handleOpenCart}
-          />
           {currUser ? (
             <Link
               to={

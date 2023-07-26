@@ -8,6 +8,8 @@ import { serverUrl } from "../utils/uploadFile";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import Loader from "../components/Layout/Loader";
+import { addToCart } from "../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 const tabsInfo = [
   {
@@ -30,6 +32,7 @@ function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [count, setCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   function handleDecrementCount() {
     if (count > 1) {
@@ -39,6 +42,13 @@ function ProductDetailPage() {
 
   function handleIncrementCount() {
     setCount((prev) => prev + 1);
+  }
+
+  function handleAddToCart(product) {
+    if (product.stock < count) {
+      return toast.error("Product Stock Limited!");
+    }
+    dispatch(addToCart({ ...product, qty: count }));
   }
 
   async function getAllShopProductsOrEvents() {
@@ -111,8 +121,15 @@ function ProductDetailPage() {
               {productDetails?.name}
             </p>
             <p className="text-gray-500">{productDetails?.description}</p>
-            <p className="my-3 font-semibold text-xl">
-              Price : $ {productDetails.discountPrice}
+            <p className="my-2 font-semibold text-xl">
+              Price :{" "}
+              <span className="text-red-500 line-through">
+                {productDetails?.originalPrice}$
+              </span>{" "}
+              {productDetails.discountPrice}$
+            </p>
+            <p className="text-red-600 my-2">
+              ({productDetails.stock}) In Stock
             </p>
             <div className="flex items-center">
               <button
@@ -129,7 +146,10 @@ function ProductDetailPage() {
                 +
               </button>
             </div>
-            <button className="px-6 py-2 bg-black rounded-lg text-white my-6 w-fit">
+            <button
+              className="px-6 py-2 bg-black rounded-lg text-white my-6 w-fit"
+              onClick={() => handleAddToCart(productDetails)}
+            >
               Add To Cart
             </button>
 
