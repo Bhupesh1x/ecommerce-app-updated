@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 function ProductDetailsModal({ setOpen, product }) {
   const [count, setCount] = useState(1);
@@ -37,9 +38,11 @@ function ProductDetailsModal({ setOpen, product }) {
                 className="h-[40px] w-[40px] rounded-full"
               />
               <div>
-                <p className="text-blue-400 font-semibold">
-                  {product.shop.name}
-                </p>
+                <Link to={`/shop/${product.shop._id}`}>
+                  <p className="text-blue-400 font-semibold">
+                    {product.shop.name}
+                  </p>
+                </Link>
                 <p className="text-base text-gray-500">
                   ({product.shop.ratings}) Ratings
                 </p>

@@ -33,7 +33,7 @@ function Home() {
     if (!productData.length) {
       getAllProductsData();
     }
-  }, []);
+  }, [productData.length]);
 
   return (
     <div>

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function ProductCard({ product }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="w-full  bg-white rounded-lg shadow-lg p-3 relative cursor-pointer">
+    <div className="w-full  bg-white rounded-lg shadow-lg p-3 relative cursor-pointer border border-gray-300 hover:border-gray-400">
       <Link to={`/product/${product._id}`}>
         <img
           src={`${product.images && product?.images[0]}`}
@@ -19,7 +19,9 @@ function ProductCard({ product }) {
           className="w-full h-[150px] object-contain cursor-pointer"
         />
       </Link>
-      <h5 className="text-blue-400 font-semibold">{product.shop.name}</h5>
+      <Link to={`/shop/${product.shop._id}`}>
+        <h5 className="text-blue-400 font-semibold">{product.shop.name}</h5>
+      </Link>
 
       <Link to={`/product/${product._id}`}>
         <h4 className="py-3 font-[500] cursor-pointer">

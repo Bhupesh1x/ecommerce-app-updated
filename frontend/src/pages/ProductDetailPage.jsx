@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Layout/Footer";
 import Navbar from "../components/Layout/Navbar";
 import Header from "../components/Layout/Header";
 import RelatedProduct from "../components/product/RelatedProduct";
-import { useSelector } from "react-redux";
 import { serverUrl } from "../utils/uploadFile";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -141,9 +140,11 @@ function ProductDetailPage() {
                 className="h-[40px] w-[40px] rounded-full"
               />
               <div>
-                <p className="text-blue-400 font-semibold">
-                  {productDetails.shop.name}
-                </p>
+                <Link to={`/shop/${productDetails.shop._id}`}>
+                  <p className="text-blue-400 font-semibold">
+                    {productDetails.shop.name}
+                  </p>
+                </Link>
                 <p className="text-base text-gray-500">
                   ({productDetails.shop.ratings}) Ratings
                 </p>
@@ -187,36 +188,8 @@ function ProductDeailsInfo({ productDetails }) {
       <div>
         {activeTab === 1 ? (
           <>
-            <p className="py-2 text-gray-500">
-              Product details are a crucial part of any eCommerce website or
-              online marketplace. These details help the potential customers to
-              make an informed decision about the product they are interested in
-              buying. A well-written product description can also be a powerful
-              marketing tool that can help to increase sales. Product details
-              typically include information about the product's features,
-              specifications, dimensions, weight, materials, and other relevant
-              information that can help language, and be honest and transparent
-              about the product's features and limitations.
-            </p>
-            <p className="py-2 text-gray-500">
-              customers to understand the product better. The product details
-              section should also include high-quality images and videos of the
-              product, as well as customer reviews and ratings. When writing
-              product details, it is essential to keep the target audience in
-              mind. The language used should be clear and easy to understand,
-              and technical terms should be explained in simple language. The
-              tone of the product details should be persuasive, highlighting the
-              unique features of the
-            </p>
-            <p className="py-2 text-gray-500">
-              customers to understand the product better. The product details
-              section should also include high-quality images and videos of the
-              product, as well as customer reviews and ratings. When writing
-              product details, it is essential to keep the target audience in
-              mind. The language used should be clear and easy to understand,
-              and technical terms should be explained in simple language. The
-              tone of the product details should be persuasive, highlighting the
-              unique features of the
+            <p className="py-2 text-gray-500 whitespace-pre-line">
+              {productDetails.description}
             </p>
           </>
         ) : null}
@@ -235,24 +208,20 @@ function ProductDeailsInfo({ productDetails }) {
                   className="h-[40px] w-[40px] rounded-full"
                 />
                 <div>
-                  <p className="text-blue-400 font-semibold">
-                    {productDetails.shop.name}
-                  </p>
+                  <Link to={`/shop/${productDetails.shop?._id}`}>
+                    <p className="text-blue-400 font-semibold">
+                      {productDetails.shop.name}
+                    </p>
+                  </Link>
                   <p className="text-base text-gray-500">
-                    ({productDetails.shop.ratings}) Ratings
+                    ({productDetails.shop?.ratings}) Ratings
                   </p>
                 </div>
               </div>
-              <p className="py-3">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod
-                possimus quae sit illo quia, aspernatur inventore nulla nobis
-                recusandae deserunt obcaecati libero odio aliquam?
-              </p>
+              <p className="py-3">{productDetails.shop?.desc}</p>
             </div>
             <div className="space-y-3 w-[50%] text-right font-bold">
-              <p>Joined on: 29,Jully,2022</p>
-              <p>Totan Products: 1221</p>
-              <p>Total Reviews: 29</p>
+              <p>Joined on: {productDetails.shop.createdAt.slice(0, 10)}</p>
             </div>
           </div>
         ) : null}

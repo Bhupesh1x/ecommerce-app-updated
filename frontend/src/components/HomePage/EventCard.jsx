@@ -1,32 +1,38 @@
 import React from "react";
 
-function EventCard() {
+function EventCard({ event }) {
   return (
     <div className="px-6 bg-white py-6 shadow-md rounded-md lg:flex lg:items-center">
       <img
-        src="https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg"
+        src={event?.images[0]}
         alt=""
-        className="w-full lg:w-[50%]"
+        className="w-full lg:w-[50%] max-h-[30rem] object-contain"
       />
 
       <div>
-        <h1 className="text-xl font-semibold">Iphone 14 pro max 8/256gb</h1>
-        <p className="my-2 text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit,
-          ducimus eum similique corporis dolor molestias labore accusantium sed
-          accusamus illo voluptate aut reprehenderit sit reiciendis blanditiis
-          doloribus quos cupiditate corrupti. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Velit, ducimus eum similique corporis
-          dolor molestias labore accusantium sed accusamus illo voluptate aut
-          reprehenderit sit reiciendis blanditiis doloribus quos cupiditate
-          corrupti.
-        </p>
+        <h1 className="text-xl font-semibold">{event?.name}</h1>
+        <p className="my-2 text-gray-600">{event?.description}</p>
         <div className="flex items-center justify-between my-3">
-          <p className="font-semibold  text-xl">Price : 999$</p>
-          <p className="text-[#68d284]">120 sold</p>
+          <p className="font-semibold  text-xl">
+            Price :{" "}
+            <span className="text-red-500 line-through">
+              {event?.originalPrice}$
+            </span>{" "}
+            {event?.discountPrice}$
+          </p>
+          <p className="text-[#68d284]">{event?.sold_out} sold</p>
         </div>
 
-        <p className="text-blue-500 text-2xl">2 days left</p>
+        <p className="text-blue-500 text-xl md:text-2xl">
+          Event From{" "}
+          <span className=" text-orange-500">
+            {event?.start_date.slice(0, 10)}
+          </span>{" "}
+          To{" "}
+          <span className=" text-orange-500">
+            {event?.end_date.slice(0, 10)}
+          </span>
+        </p>
 
         <div className="flex items-center gap-6">
           <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">

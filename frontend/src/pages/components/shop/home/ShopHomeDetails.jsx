@@ -1,7 +1,11 @@
-import React, { useState } from "react";
-import { productData } from "../../../../static/data";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../../../../components/product/ProductCard";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { serverUrl } from "../../../../utils/uploadFile";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProductsOfShop } from "../../../../redux/shopProductSlice";
+import { toast } from "react-hot-toast";
 
 const sidebarData = [
   {
@@ -20,6 +24,27 @@ const sidebarData = [
 
 function ShopHomeDetails() {
   const [active, setActive] = useState(1);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const shopAllProducts = useSelector((state) => state.productShop.value);
+
+  async function getAllShopProducts() {
+    const url = `${serverUrl}/product/get-products-by-shop-id/${id}`;
+
+    try {
+      const result = await axios.get(url, {
+        withCredentials: true,
+      });
+      dispatch(getAllProductsOfShop(result.data));
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
+
+  useEffect(() => {
+    getAllShopProducts();
+  }, []);
+
   return (
     <div className="w-[80%] bg-white shadow-md border border-gray-300 rounded-md p-4">
       <div className="flex items-center justify-between">
@@ -43,8 +68,8 @@ function ShopHomeDetails() {
         </Link>
       </div>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3 my-4">
-        {productData &&
-          productData?.map((value, index) => (
+        {shopAllProducts &&
+          shopAllProducts?.map((value, index) => (
             <ProductCard product={value} key={index} />
           ))}
       </div>

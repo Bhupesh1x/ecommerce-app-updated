@@ -69,4 +69,13 @@ router.get("/logout", isSellerAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/get-shop-info/:id", async (req, res) => {
+  try {
+    const shop = await Shop.findById(req.params.id);
+    res.status(200).json(shop);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
 module.exports = router;

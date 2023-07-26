@@ -59,4 +59,13 @@ router.delete(
   }
 );
 
+router.get("/get-all-events", async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.status(200).json(events);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
 module.exports = router;
