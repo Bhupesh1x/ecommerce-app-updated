@@ -10,6 +10,9 @@ import {
   FaqPage,
   ProfilePage,
   ShopCreatePage,
+  CheckoutPage,
+  PaymentPage,
+  OrderSuccessPage,
 } from "./routes/Routes.js";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./routes/ProtectedRoute.js";
@@ -98,6 +101,30 @@ function App() {
             <ShopProtectedRoute>
               <ShopAllCoupons />
             </ShopProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <ProtectedRoute>
+              <PaymentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/success/:id"
+          element={
+            <ProtectedRoute>
+              <OrderSuccessPage />
+            </ProtectedRoute>
           }
         />
       </Routes>

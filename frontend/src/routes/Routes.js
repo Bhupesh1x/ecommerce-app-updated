@@ -8,6 +8,9 @@ import FaqPage from "../pages/FaqPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import ProfilePage from "../pages/ProfilePage";
 import ShopCreatePage from "../pages/ShopCreatePage";
+import CheckoutPage from "../pages/CheckoutPage";
+import PaymentPage from "../pages/PaymentPage";
+import OrderSuccessPage from "../pages/OrderSucessPage";
 
 export {
   Login,
@@ -20,4 +23,7 @@ export {
   ProductDetailPage,
   ProfilePage,
   ShopCreatePage,
+  CheckoutPage,
+  PaymentPage,
+  OrderSuccessPage,
 };
