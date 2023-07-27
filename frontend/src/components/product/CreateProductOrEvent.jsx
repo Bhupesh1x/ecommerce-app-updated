@@ -200,7 +200,7 @@ function CreateProductOrEvent({ isEvent }) {
             id="file-input"
             accept=".jpg,.jpeg,.png"
             onChange={(e) => handleUpload(e)}
-            className="sr-only"
+            className="hidden"
             multiple
           />
         </label>

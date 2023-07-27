@@ -36,7 +36,7 @@ function Home() {
   }, [productData.length]);
 
   return (
-    <div>
+    <>
       <Header />
       <Navbar activeNo={0} />
       <Hero />
@@ -46,7 +46,7 @@ function Home() {
       <FeaturedProducts />
       <Sponsored />
       <Footer />
-    </div>
+    </>
   );
 }
 

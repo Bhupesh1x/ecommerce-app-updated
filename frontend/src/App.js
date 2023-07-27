@@ -27,7 +27,7 @@ import {
 
 function App() {
   return (
-    <div className="bg-[#F6F6F5]">
+    <div className="bg-[#F6F6F5] overflow-hidden">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />

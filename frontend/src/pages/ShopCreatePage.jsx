@@ -121,7 +121,7 @@ function ShopCreatePage() {
               id="file-input"
               accept=".jpg,.jpeg,.png"
               onChange={handleFileInputChange}
-              className="sr-only"
+              className="hidden"
             />
           </label>
         </div>

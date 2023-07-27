@@ -3,6 +3,7 @@ import { RxCross1 } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../../redux/cartSlice";
+import { Link } from "react-router-dom";
 
 function Cart({ setOpenCart }) {
   const cartData = useSelector((state) => state.cart.value);
@@ -35,12 +36,14 @@ function Cart({ setOpenCart }) {
           )}
         </div>
 
-        <button
-          disabled={!cartData.length}
-          className="absolute bottom-4 w-full bg-black text-white mt-4 px-8 py-3 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
-        >
-          Checkout Now (USD${totalPrice})
-        </button>
+        <Link to="/checkout">
+          <button
+            disabled={!cartData.length}
+            className="absolute bottom-4 w-full bg-black text-white mt-4 px-8 py-3 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            Checkout Now (USD${totalPrice})
+          </button>
+        </Link>
       </div>
     </div>
   );

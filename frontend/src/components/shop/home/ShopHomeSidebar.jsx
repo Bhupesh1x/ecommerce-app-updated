@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { serverUrl } from "../../../../utils/uploadFile";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCurrUser } from "../../../../utils/getUser";
+import { serverUrl } from "../../../utils/uploadFile";
+import { getCurrUser } from "../../../utils/getUser";
 
 function DashboardSidebar({ active, setActive }) {
   const { id } = useParams();
@@ -43,7 +43,7 @@ function DashboardSidebar({ active, setActive }) {
   }
 
   return (
-    <div className="w-[25%] h-[90vh] bg-white shadow-md border border-gray-300 rounded-md p-3 sticky left-0 top-[1.6rem] md:top-10">
+    <div className="w-[25%] h-[89vh] bg-white shadow-md border border-gray-300 rounded-md p-3 sticky left-0 top-[1.6rem] md:top-10">
       <div className="w-full flex items-center justify-center">
         <img
           src={shopInfo?.avatar}
@@ -53,7 +53,7 @@ function DashboardSidebar({ active, setActive }) {
       </div>
       <p className="text-center font-semibold text-xl">{shopInfo?.name}</p>
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-4 space-y-4">
         <div>
           <p className="font-semibold text-sm md:text-base">Address :</p>
           <p className="text-gray-600">{shopInfo?.address}</p>
@@ -73,7 +73,7 @@ function DashboardSidebar({ active, setActive }) {
       </div>
       {currUser?._id === id && (
         <>
-          <button className="bg-black text-white mt-12 px-4 py-2 rounded-lg block w-full">
+          <button className="bg-black text-white mt-8 px-4 py-2 rounded-lg block w-full">
             Edit Shop
           </button>
           <button

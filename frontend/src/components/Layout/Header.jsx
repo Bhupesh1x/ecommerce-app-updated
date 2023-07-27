@@ -42,7 +42,7 @@ function Header() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 bg-slate-50 shadow-sm">
+    <nav className="fixed top-0 z-50 bg-slate-50 shadow-sm w-full">
       <div className="container flex items-center justify-between py-4 px-6">
         <Link to="/" className="hidden md:inline">
           <img

@@ -80,7 +80,7 @@ const sidebarData = [
 
 function DashboardSidebar({ active, setActive }) {
   return (
-    <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-3">
+    <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-3 max-h-[80vh]">
       {sidebarData.map((sidebar, index) => (
         <Link
           to={sidebar.link}

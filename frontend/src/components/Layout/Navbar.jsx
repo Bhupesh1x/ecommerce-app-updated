@@ -16,7 +16,7 @@ function Navbar({ activeNo, isColumn }) {
   };
 
   return (
-    <div className={`${!isColumn && "hidden bg-blue-700"} md:block`}>
+    <div className={`${!isColumn && "hidden bg-blue-700"} md:block mt-20`}>
       <div
         className={`container pt-2 px-6 flex items-center justify-between w-full ${
           isColumn && "flex-col"

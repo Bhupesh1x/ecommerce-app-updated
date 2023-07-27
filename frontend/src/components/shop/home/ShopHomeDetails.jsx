@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import ProductCard from "../../../../components/product/ProductCard";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { serverUrl } from "../../../../utils/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsOfShop } from "../../../../redux/shopProductSlice";
 import { toast } from "react-hot-toast";
+import ProductCard from "../../product/ProductCard";
+import { serverUrl } from "../../../utils/uploadFile";
+import { getAllProductsOfShop } from "../../../redux/shopProductSlice";
 
 const sidebarData = [
   {
@@ -35,6 +35,7 @@ function ShopHomeDetails() {
       const result = await axios.get(url, {
         withCredentials: true,
       });
+      console.log("dats", result.data);
       dispatch(getAllProductsOfShop(result.data));
     } catch (error) {
       toast.error(error?.response?.data);
