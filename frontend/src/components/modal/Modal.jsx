@@ -6,7 +6,7 @@ function Modal({ children, isLarge }) {
       <div
         className={`${
           isLarge ? "h-[65vh] md:w-[65%]" : "h-fit md:w-[45%]"
-        } w-[90%] rounded-lg shadow-lg bg-white relative py-3 px-6 border-2 border-gray-200 overflow-y-scroll`}
+        } w-[90%] rounded-lg shadow-lg bg-white relative py-3 px-6 border-2 border-gray-200 overflow-y-scroll z-[999]`}
       >
         {children}
       </div>

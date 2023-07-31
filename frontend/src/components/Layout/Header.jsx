@@ -42,7 +42,7 @@ function Header() {
   }
 
   return (
-    <nav className="fixed top-0 z-50 bg-slate-50 shadow-sm w-full">
+    <nav className="sticky top-0 z-50 bg-slate-50 shadow-sm w-full">
       <div className="container flex items-center justify-between py-4 px-6">
         <Link to="/" className="hidden md:inline">
           <img
@@ -85,7 +85,7 @@ function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          {currUser.role !== "Seller" && (
+          {currUser?.role !== "Seller" && (
             <Link to="/shop-create">
               <button className="bg-black text-white px-2 md:px-4 py-1 md:py-2 rounded-lg hidden md:inline">
                 <span className="inline">Become seller</span>{" "}
@@ -106,7 +106,7 @@ function Header() {
           {currUser ? (
             <Link
               to={
-                currUser.role !== "Seller"
+                currUser?.role !== "Seller"
                   ? "/profile"
                   : `/shop/${currUser._id}`
               }

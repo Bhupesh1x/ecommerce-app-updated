@@ -740,3 +740,18 @@ export const tableColumns = [
     },
   },
 ];
+
+export const addressTypeData = [
+  {
+    id: 1,
+    name: "Default",
+  },
+  {
+    id: 2,
+    name: "Home",
+  },
+  {
+    id: 3,
+    name: "Office",
+  },
+];
