@@ -53,7 +53,7 @@ function ProfileDetails({ active }) {
       {active === 5 && <Trackorders row={row} columns={tableColumns} />}
 
       {/* Payment Section */}
-      {active === 6 && <PaymentMethod />}
+      {active === 6 && <ChangePassword />}
 
       {/* Address Section */}
       {active === 7 && <Address />}
@@ -200,38 +200,90 @@ function Trackorders({ row, columns }) {
   );
 }
 
-function PaymentMethod() {
+function ChangePassword() {
+  const [oldPassword, setOldPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (newPassword !== confirmPassword) {
+      return toast.error("New password doesn't match with confirm password!");
+    }
+    const notification = () => toast("Updating your password...");
+    try {
+      const payload = {
+        oldPassword,
+        newPassword,
+      };
+
+      const result = await axios.put(
+        `${serverUrl}/user/update-user-password`,
+        payload,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(result.data, {
+        id: notification,
+      });
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data, {
+        id: notification,
+      });
+    }
+  }
+
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-semibold">Payment Methods</h1>
+      <div className="flex items-center justify-center mb-4">
+        <h1 className="text-xl font-semibold">Change Password</h1>
+      </div>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-4 mt-6"
+      >
+        <div className="lg:w-[50%] w-full">
+          <p className="font-semibold">Old Password</p>
+          <input
+            type="password"
+            className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+            required
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[50%] w-full">
+          <p className="font-semibold">New Password</p>
+          <input
+            type="password"
+            className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="lg:w-[50%] w-full">
+          <p className="font-semibold">Confirm Password</p>
+          <input
+            type="password"
+            className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
         <button
-          className="bg-black text-white px-4 py-2 rounded-lg"
+          className="bg-black text-white mt-4 px-8  py-3  rounded-lg"
           type="submit"
         >
-          Add New
+          Update
         </button>
-      </div>
-      <div className="w-full bg-[#f7f7f7] h-min md:h-[70px] rounded-[4px] flex items-center px-3 py-1 shadow justify-between pr-10">
-        <div className="flex items-center">
-          <img
-            src="https://bonik-react.vercel.app/assets/images/payment-methods/Visa.svg"
-            alt=""
-          />
-          <h5 className="pl-5 font-[600] md:text-[unset] hidden md:inline-flex">
-            Bhupesh Vyas
-          </h5>
-        </div>
-        <div className="pl-8 flex items-center">
-          <h6 className=" md:text-[unset]">1234 **** *** ****</h6>
-          <h5 className="pl-6 md:text-[unset] hidden md:inline-flex">
-            08/2022
-          </h5>
-        </div>
-        <div className="min-w-[10%]">
-          <AiOutlineDelete size={25} className="cursor-pointer text-red-500" />
-        </div>
-      </div>
+      </form>
     </>
   );
 }
@@ -290,6 +342,28 @@ function Address() {
     }
   }
 
+  async function handleDelete(id) {
+    const notification = () => toast("Deleting your address...");
+    try {
+      const result = await axios.delete(
+        `${serverUrl}/user/delete-user-address/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      localStorage.setItem("ecommerceUser", JSON.stringify(result.data));
+      toast.success("Deleted address Successfully!", {
+        id: notification,
+      });
+      window.location.reload();
+    } catch (error) {
+      toast.error(error?.response?.data, {
+        id: notification,
+      });
+    }
+  }
+
   return (
     <>
       <div className="flex items-center justify-between mb-4">
@@ -302,10 +376,10 @@ function Address() {
           Add New
         </button>
       </div>
-      {currUser.addresses &&
+      {currUser.addresses.length ? (
         currUser.addresses.map((address) => (
           <div
-            className="w-full bg-[#f7f7f7] md:h-[70px] rounded-[4px] flex items-center px-3 py-1 shadow justify-between"
+            className="w-full bg-[#f7f7f7] md:h-[70px] rounded-[4px] my-3 flex items-center px-3 py-1 shadow justify-between"
             key={address._id}
           >
             <div className="flex items-center">
@@ -318,10 +392,16 @@ function Address() {
               <AiOutlineDelete
                 size={25}
                 className="cursor-pointer text-red-500"
+                onClick={() => handleDelete(address._id)}
               />
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <p className="text-2xl font-semibold text-center mt-4">
+          You don't have any saved address!
+        </p>
+      )}
 
       {isOpenModal && (
         <Modal>
@@ -359,7 +439,7 @@ function Address() {
                   ))}
               </select>
               <p className="font-semibold my-1 mt-2">
-                City <span className="ml-2 text-red-500">*</span>
+                State <span className="ml-2 text-red-500">*</span>
               </p>
               <select
                 value={city}

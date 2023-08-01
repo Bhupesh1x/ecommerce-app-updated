@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { serverUrl } from "../../utils/uploadFile";
 import { toast } from "react-hot-toast";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 function ProfileSidebar({ active, setActive }) {
   const navigate = useNavigate();
@@ -97,11 +98,11 @@ function ProfileSidebar({ active, setActive }) {
         className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
         onClick={() => setActive(6)}
       >
-        <AiOutlineCreditCard size={20} color={active === 6 ? "red" : ""} />
+        <RiLockPasswordLine size={20} color={active === 6 ? "red" : ""} />
         <span
           className={`pl-3 ${active === 6 ? "text-[red]" : ""} md:block hidden`}
         >
-          Payment Methods
+          Change Password
         </span>
       </div>
 

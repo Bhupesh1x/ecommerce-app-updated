@@ -132,4 +132,48 @@ router.put("/update-user-address", isAuthenticated, async (req, res) => {
   }
 });
 
+router.delete("/delete-user-address/:id", isAuthenticated, async (req, res) => {
+  const addressId = req.params.id;
+  const userId = req.user._id;
+  try {
+    await User.updateOne(
+      { _id: userId },
+      { $pull: { addresses: { _id: addressId } } }
+    );
+
+    const user = await User.findById(userId);
+
+    res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
+router.put("/update-user-password", isAuthenticated, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  try {
+    const user = await User.findById(req.user._id).select("+password");
+
+    const isPasswordCorrect = await bcrypt.compare(
+      oldPassword.toString(),
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      return res.status(404).send("Incorrect Old Password!");
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(200).send("Password Changed Sucessfully");
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
 module.exports = router;

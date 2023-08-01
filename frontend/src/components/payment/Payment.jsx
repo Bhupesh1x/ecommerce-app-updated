@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
+  const [orderData, setOrderData] = useState({});
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("eshopLatestOrder"));
+    setOrderData(data);
+  }, []);
+
+  console.log(orderData);
+
   return (
     <div className="w-full flex flex-col items-center py-8">
-      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
-        <div className="w-full 800px:w-[65%]">
+      <div className="w-[90%] 1000px:w-[70%] block md:flex">
+        <div className="w-full md:w-[65%]">
           <PaymentInfo />
         </div>
-        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-          <CartData />
+        <div className="w-full md:w-[35%] md:mt-0 mt-8">
+          <CartData orderData={orderData} />
         </div>
       </div>
     </div>
@@ -26,7 +35,7 @@ const PaymentInfo = () => {
   };
 
   return (
-    <div className="w-full 800px:w-[95%] bg-[#fff] rounded-md p-5 pb-8">
+    <div className="w-full md:w-[95%] bg-[#fff] rounded-md p-5 pb-8">
       {/* select buttons */}
       <div>
         <div className="flex w-full pb-5 border-b mb-2">
@@ -47,7 +56,7 @@ const PaymentInfo = () => {
         {select === 1 ? (
           <div className="w-full flex border-b">
             <form className="w-full" onSubmit={paymentHandler}>
-              <div className="w-full flex pb-3">
+              <div className="w-full flex pb-3 gap-3">
                 <div className="w-[50%]">
                   <label className="block pb-2">Card Number</label>
                   <input
@@ -65,7 +74,7 @@ const PaymentInfo = () => {
                 </div>
               </div>
 
-              <div className="w-full flex pb-3">
+              <div className="w-full flex pb-3 gap-3">
                 <div className="w-[50%]">
                   <label className="block pb-2">Name On Card</label>
                   <input
@@ -159,24 +168,28 @@ const PaymentInfo = () => {
     </div>
   );
 };
-const CartData = () => {
+const CartData = ({ orderData }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">subtotal:</h3>
-        <h5 className="text-[18px] font-[600]">$2610.00</h5>
+        <h5 className="text-[18px] font-[600]">${orderData?.subTotalPrice}</h5>
       </div>
       <br />
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">shipping:</h3>
-        <h5 className="text-[18px] font-[600]">-</h5>
+        <h5 className="text-[18px] font-[600]">${orderData?.shipping}</h5>
       </div>
       <br />
       <div className="flex justify-between border-b pb-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
-        <h5 className="text-[18px] font-[600]">-</h5>
+        <h5 className="text-[18px] font-[600]">
+          {orderData?.discountPrice ? `$ ${orderData?.discountPrice}` : "-"}
+        </h5>
       </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3">$2610.00</h5>
+      <h5 className="text-[18px] font-[600] text-end pt-3">
+        ${orderData?.totalPrice}
+      </h5>
       <br />
       <form>
         <input
@@ -185,12 +198,12 @@ const CartData = () => {
           placeholder="Coupoun code"
           required
         />
-        <input
-          className={`w-full h-[40px] border border-[#f63b60] text-center text-[#f63b60] rounded-[3px] mt-8 cursor-pointer`}
-          required
-          value="Apply code"
+        <button
           type="submit"
-        />
+          className="bg-black text-white mt-4 px-8 py-3 rounded-lg w-full"
+        >
+          Apply code
+        </button>
       </form>
     </div>
   );
