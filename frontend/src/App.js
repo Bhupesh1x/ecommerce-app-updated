@@ -24,10 +24,42 @@ import {
   ShopAllProducts,
   ShopAllCoupons,
 } from "./ShopRoutes.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { serverUrl } from "./utils/uploadFile.js";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    const { data } = await axios.get(`${serverUrl}/payment/stript-api-key`);
+    setStripeApiKey(data.striptApiKey);
+  }
+
+  useEffect(() => {
+    if (stripeApiKey === "") {
+      getStripeApiKey();
+    }
+  }, [stripeApiKey]);
+
   return (
     <div className="bg-[#F6F6F5] overflow-hidden">
+      {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <Routes>
+            <Route
+              path="/payment"
+              element={
+                <ProtectedRoute>
+                  <PaymentPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Elements>
+      )}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
@@ -111,14 +143,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <PaymentPage />
-            </ProtectedRoute>
-          }
-        />
+
         <Route
           path="/order/success/:id"
           element={

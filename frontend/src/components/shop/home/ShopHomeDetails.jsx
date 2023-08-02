@@ -35,7 +35,6 @@ function ShopHomeDetails() {
       const result = await axios.get(url, {
         withCredentials: true,
       });
-      console.log("dats", result.data);
       dispatch(getAllProductsOfShop(result.data));
     } catch (error) {
       toast.error(error?.response?.data);

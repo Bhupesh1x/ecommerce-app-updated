@@ -1,7 +1,6 @@
 import React from "react";
 
 const CheckoutSteps = ({ active }) => {
-  console.log(active);
   return (
     <div className="w-full flex justify-center">
       <div className="w-[90%] 800px:w-[50%] flex items-center flex-wrap">

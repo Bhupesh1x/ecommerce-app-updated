@@ -1,21 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import { getCurrUser } from "../../utils/getUser";
+
+const striptInputStyles = {
+  style: {
+    base: {
+      fontSize: "19px",
+      lineHeight: 1.5,
+      color: "#444",
+    },
+    empty: {
+      color: "#3a120a",
+      backgroundColor: "transparent",
+      "::placeholder": {
+        color: "#444",
+      },
+    },
+  },
+};
 
 const Payment = () => {
   const [orderData, setOrderData] = useState({});
+  const [open, setOpen] = useState({});
+  const currUser = getCurrUser();
+  const navigate = useNavigate();
+  const stripe = useStripe();
+  const elements = useElements();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("eshopLatestOrder"));
     setOrderData(data);
   }, []);
 
-  console.log(orderData);
+  function createOrder(data, actions) {
+    console.log("createOrder");
+  }
+
+  async function onApprove(data, actions) {
+    console.log("onApprove");
+  }
+
+  async function paypalPaymentHandler(paymentInfo) {
+    console.log("paypalPaymentHandler");
+  }
+
+  const paymentData = {
+    amount: Math.round(orderData?.totalPrice * 100),
+  };
+
+  async function paymentHandler(e) {
+    e.preventDefault();
+  }
+
+  async function cashOnDeliveryHandler(e) {
+    e.preventDefault();
+  }
 
   return (
     <div className="w-full flex flex-col items-center py-8">
       <div className="w-[90%] 1000px:w-[70%] block md:flex">
         <div className="w-full md:w-[65%]">
-          <PaymentInfo />
+          <PaymentInfo
+            currUser={currUser}
+            open={open}
+            setOpen={setOpen}
+            onApprove={onApprove}
+            createOrder={createOrder}
+            paymentHandler={paymentHandler}
+            cashOnDeliveryHandler={cashOnDeliveryHandler}
+          />
         </div>
         <div className="w-full md:w-[35%] md:mt-0 mt-8">
           <CartData orderData={orderData} />
@@ -25,14 +85,16 @@ const Payment = () => {
   );
 };
 
-const PaymentInfo = () => {
+const PaymentInfo = ({
+  currUser,
+  open,
+  setOpen,
+  onApprove,
+  createOrder,
+  paymentHandler,
+  cashOnDeliveryHandler,
+}) => {
   const [select, setSelect] = useState(1);
-  const navigate = useNavigate();
-
-  const paymentHandler = (e) => {
-    e.preventDefault();
-    navigate("/order/success/fdbxf9848");
-  };
 
   return (
     <div className="w-full md:w-[95%] bg-[#fff] rounded-md p-5 pb-8">
@@ -58,36 +120,35 @@ const PaymentInfo = () => {
             <form className="w-full" onSubmit={paymentHandler}>
               <div className="w-full flex pb-3 gap-3">
                 <div className="w-[50%]">
-                  <label className="block pb-2">Card Number</label>
+                  <label className="block pb-2">Name on card</label>
                   <input
                     required
-                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+                    placeholder={currUser && currUser?.name}
+                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300 placeholder:text-[#444] text-[#444]"
                   />
                 </div>
                 <div className="w-[50%]">
                   <label className="block pb-2">Exp Date</label>
-                  <input
-                    type="number"
-                    required
+                  <CardExpiryElement
                     className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+                    options={striptInputStyles}
                   />
                 </div>
               </div>
 
               <div className="w-full flex pb-3 gap-3">
                 <div className="w-[50%]">
-                  <label className="block pb-2">Name On Card</label>
-                  <input
-                    required
-                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+                  <label className="block pb-2">Card Number</label>
+                  <CardNumberElement
+                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300 h-[35px]"
+                    options={striptInputStyles}
                   />
                 </div>
                 <div className="w-[50%]">
-                  <label className="block pb-2">Billing Address</label>
-                  <input
-                    type="text"
-                    required
-                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
+                  <label className="block pb-2">CVV</label>
+                  <CardCvcElement
+                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300 h-[35px]"
+                    options={striptInputStyles}
                   />
                 </div>
               </div>
