@@ -8,6 +8,10 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { getCurrUser } from "../../utils/getUser";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { serverUrl } from "../../utils/uploadFile";
+import { useSelector } from "react-redux";
 
 const striptInputStyles = {
   style: {
@@ -33,6 +37,13 @@ const Payment = () => {
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
+  const cartData = useSelector((state) => state.cart.value);
+
+  useEffect(() => {
+    if (!cartData?.length) {
+      navigate("/");
+    }
+  }, [navigate, cartData?.length]);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("eshopLatestOrder"));
@@ -47,17 +58,64 @@ const Payment = () => {
     console.log("onApprove");
   }
 
-  async function paypalPaymentHandler(paymentInfo) {
-    console.log("paypalPaymentHandler");
-  }
-
   const paymentData = {
     amount: Math.round(orderData?.totalPrice * 100),
   };
 
-  async function paymentHandler(e) {
+  const order = {
+    cart: cartData,
+    shippingAddress: orderData?.shipping,
+    user: currUser && currUser,
+    totalPrice: orderData?.totalPrice,
+  };
+
+  const paymentHandler = async (e) => {
     e.preventDefault();
-  }
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        `${serverUrl}/payment/process`,
+        paymentData,
+        config
+      );
+
+      const client_secret = data.client_secret;
+
+      if (!stripe || !elements) return;
+      const result = await stripe.confirmCardPayment(client_secret, {
+        payment_method: {
+          card: elements.getElement(CardNumberElement),
+        },
+      });
+
+      if (result.error) {
+        toast.error(result.error.message);
+      } else {
+        if (result.paymentIntent.status === "succeeded") {
+          order.paymnentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+            type: "Credit Card",
+          };
+
+          await axios
+            .post(`${serverUrl}/order/create-order`, order, config)
+            .then((res) => {
+              setOpen(false);
+              toast.success("Order successful!");
+              navigate("/order/success");
+            });
+        }
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   async function cashOnDeliveryHandler(e) {
     e.preventDefault();
@@ -152,7 +210,7 @@ const PaymentInfo = ({
                   />
                 </div>
               </div>
-              <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
+              <button className="bg-black text-white my-4 px-8  py-3  rounded-lg">
                 Submit
               </button>
             </form>
@@ -161,42 +219,6 @@ const PaymentInfo = ({
       </div>
 
       <br />
-      {/* paypal payment */}
-      <div>
-        <div className="flex w-full pb-5 border-b mb-2">
-          <div
-            className="w-[25px] h-[25px] rounded-full bg-transparent border-[3px] border-[#1d1a1ab4] relative flex items-center justify-center"
-            onClick={() => setSelect(2)}
-          >
-            {select === 2 ? (
-              <div className="w-[13px] h-[13px] bg-[#1d1a1acb] rounded-full" />
-            ) : null}
-          </div>
-          <h4 className="text-[18px] pl-2 font-[600] text-[#000000b1]">
-            Pay with Paypal
-          </h4>
-        </div>
-
-        {/* pay with card */}
-        {select === 2 ? (
-          <div className="w-full flex border-b">
-            <form className="w-full" onSubmit={paymentHandler}>
-              <div className="w-full flex pb-3">
-                <div className="w-full">
-                  <label className="block pb-2">Paypal Email</label>
-                  <input
-                    required
-                    className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
-                  />
-                </div>
-              </div>
-              <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
-                Submit
-              </button>
-            </form>
-          </div>
-        ) : null}
-      </div>
 
       <br />
       {/* cash on delivery */}
@@ -229,6 +251,7 @@ const PaymentInfo = ({
     </div>
   );
 };
+
 const CartData = ({ orderData }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">

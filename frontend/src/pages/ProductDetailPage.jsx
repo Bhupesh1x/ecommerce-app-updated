@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import Footer from "../components/Layout/Footer";
 import Navbar from "../components/Layout/Navbar";
 import Header from "../components/Layout/Header";
@@ -33,6 +33,8 @@ function ProductDetailPage() {
   const [count, setCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const isEvent = searchParams.get("isEvent");
 
   function handleDecrementCount() {
     if (count > 1) {
@@ -53,13 +55,13 @@ function ProductDetailPage() {
 
   async function getAllShopProductsOrEvents() {
     setIsLoading(true);
+    const url = isEvent
+      ? `${serverUrl}/event/get-event-by-id/${id}`
+      : `${serverUrl}/product/get-product-by-id/${id}`;
     try {
-      const result = await axios.get(
-        `${serverUrl}/product/get-product-by-id/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const result = await axios.get(url, {
+        withCredentials: true,
+      });
       setProductDetails(result.data);
       setIsLoading(false);
     } catch (error) {
@@ -177,7 +179,7 @@ function ProductDetailPage() {
         </div>
 
         <ProductDeailsInfo productDetails={productDetails} />
-        <RelatedProduct productDetails={productDetails} />
+        {!isEvent && <RelatedProduct productDetails={productDetails} />}
       </div>
       <Footer />
     </>

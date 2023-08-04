@@ -68,4 +68,13 @@ router.get("/get-all-events", async (req, res) => {
   }
 });
 
+router.get("/get-event-by-id/:id", async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    res.status(200).json(event);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
 module.exports = router;

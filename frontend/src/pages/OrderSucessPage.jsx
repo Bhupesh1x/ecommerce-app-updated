@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Lottie from "react-lottie";
-import animationData from "../assets/ecommerce-animation.json";
+import animationData from "../assets/success.json";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../redux/cartSlice";
 
 const OrderSuccessPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    localStorage.setItem("eshopLatestOrder", JSON.stringify([]));
+    dispatch(clearCart());
+  }, []);
+
   return (
     <div>
       <Header />

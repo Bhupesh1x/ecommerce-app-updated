@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function EventCard({ event }) {
   return (
@@ -24,7 +25,7 @@ function EventCard({ event }) {
         </div>
 
         <p className="text-blue-500 text-xl md:text-2xl">
-          Event From{" "}
+          Event Valid From{" "}
           <span className=" text-orange-500">
             {event?.start_date.slice(0, 10)}
           </span>{" "}
@@ -34,14 +35,11 @@ function EventCard({ event }) {
           </span>
         </p>
 
-        <div className="flex items-center gap-6">
+        <Link to={`/product/${event._id}?isEvent=true`}>
           <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
             See Details
           </button>
-          <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
-            Buy Now
-          </button>
-        </div>
+        </Link>
       </div>
     </div>
   );

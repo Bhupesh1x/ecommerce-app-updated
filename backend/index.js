@@ -8,6 +8,7 @@ const productRoutes = require("./routes/productRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const couponCodeRoutes = require("./routes/couponCodeRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/event", eventRoutes);
 app.use("/api/couponCode", couponCodeRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/order", orderRoutes);
 
 function connectDB() {
   mongoose

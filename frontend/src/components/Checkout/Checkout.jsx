@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Country, State } from "country-state-city";
 import { useNavigate } from "react-router-dom";
 import { getCurrUser } from "../../utils/getUser";
@@ -22,6 +22,12 @@ const Checkout = () => {
   const [couponCodeData, setCouponCodeData] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
 
+  useEffect(() => {
+    if (!cartData?.length) {
+      navigate("/");
+    }
+  }, [navigate, cartData?.length]);
+
   const subTotalPrice = useMemo(() => {
     const price = cartData.reduce(
       (acc, item) => acc + item.qty * item.discountPrice,
@@ -31,7 +37,7 @@ const Checkout = () => {
   }, [cartData]);
 
   const shipping = useMemo(() => {
-    return subTotalPrice * 0.02;
+    return subTotalPrice * 0.1;
   }, [subTotalPrice]);
 
   const handleSubmit = async (e) => {
@@ -41,6 +47,11 @@ const Checkout = () => {
     await axios
       .get(`${serverUrl}/couponCode/get-coupon-value/${name}`)
       .then((res) => {
+        if (res.data === null) {
+          toast.error("Coupon code doesn't exists!");
+          setCouponCode("");
+          return;
+        }
         const shopId = res.data?.shopId;
         const couponCodeValue = res.data?.value;
         if (res.data !== null) {
@@ -61,10 +72,6 @@ const Checkout = () => {
             setCouponCode("");
             toast.success("Coupon code applied sucessfully!");
           }
-        }
-        if (res.data.couponCode === null) {
-          toast.error("Coupon code doesn't exists!");
-          setCouponCode("");
         }
       });
   };
