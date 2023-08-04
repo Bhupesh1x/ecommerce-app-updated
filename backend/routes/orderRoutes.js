@@ -21,8 +21,6 @@ router.post("/create-order", async (req, res, next) => {
       shopItemsMap.get(shopId).push(item);
     }
 
-    console.log("shopItemsMap", shopItemsMap);
-
     // create an order for each shop
     const orders = [];
 

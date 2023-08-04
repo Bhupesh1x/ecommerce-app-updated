@@ -50,14 +50,6 @@ const Payment = () => {
     setOrderData(data);
   }, []);
 
-  function createOrder(data, actions) {
-    console.log("createOrder");
-  }
-
-  async function onApprove(data, actions) {
-    console.log("onApprove");
-  }
-
   const paymentData = {
     amount: Math.round(orderData?.totalPrice * 100),
   };
@@ -97,14 +89,18 @@ const Payment = () => {
         toast.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-          order.paymnentInfo = {
+          const paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
             type: "Credit Card",
           };
 
           await axios
-            .post(`${serverUrl}/order/create-order`, order, config)
+            .post(
+              `${serverUrl}/order/create-order`,
+              { ...order, paymentInfo },
+              config
+            )
             .then((res) => {
               setOpen(false);
               toast.success("Order successful!");
@@ -119,6 +115,28 @@ const Payment = () => {
 
   async function cashOnDeliveryHandler(e) {
     e.preventDefault();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const paymentInfo = {
+      type: "Cash On Delivery",
+    };
+
+    await axios
+      .post(
+        `${serverUrl}/order/create-order`,
+        { ...order, paymentInfo },
+        config
+      )
+      .then((res) => {
+        setOpen(false);
+        toast.success("Order successful!");
+        navigate("/order/success");
+      });
   }
 
   return (
@@ -129,8 +147,6 @@ const Payment = () => {
             currUser={currUser}
             open={open}
             setOpen={setOpen}
-            onApprove={onApprove}
-            createOrder={createOrder}
             paymentHandler={paymentHandler}
             cashOnDeliveryHandler={cashOnDeliveryHandler}
           />
@@ -147,8 +163,6 @@ const PaymentInfo = ({
   currUser,
   open,
   setOpen,
-  onApprove,
-  createOrder,
   paymentHandler,
   cashOnDeliveryHandler,
 }) => {
@@ -240,7 +254,7 @@ const PaymentInfo = ({
         {/* pay with card */}
         {select === 3 ? (
           <div className="w-full flex">
-            <form className="w-full" onSubmit={paymentHandler}>
+            <form className="w-full" onSubmit={cashOnDeliveryHandler}>
               <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
                 Confirm
               </button>
@@ -253,6 +267,7 @@ const PaymentInfo = ({
 };
 
 const CartData = ({ orderData }) => {
+  const shippingData = orderData?.shipping?.toFixed(2);
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
       <div className="flex justify-between">
@@ -262,7 +277,7 @@ const CartData = ({ orderData }) => {
       <br />
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">shipping:</h3>
-        <h5 className="text-[18px] font-[600]">${orderData?.shipping}</h5>
+        <h5 className="text-[18px] font-[600]">${shippingData}</h5>
       </div>
       <br />
       <div className="flex justify-between border-b pb-3">
@@ -275,20 +290,6 @@ const CartData = ({ orderData }) => {
         ${orderData?.totalPrice}
       </h5>
       <br />
-      <form>
-        <input
-          type="text"
-          className="border border-gray-400 rounded-md w-full px-2 py-1 outline-none focus:border-blue-500 transition-all duration-300"
-          placeholder="Coupoun code"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-black text-white mt-4 px-8 py-3 rounded-lg w-full"
-        >
-          Apply code
-        </button>
-      </form>
     </div>
   );
 };

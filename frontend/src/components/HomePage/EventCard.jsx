@@ -35,7 +35,7 @@ function EventCard({ event }) {
           </span>
         </p>
 
-        <Link to={`/product/${event._id}?isEvent=true`}>
+        <Link to={`/product/${event?._id}?isEvent=true`}>
           <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
             See Details
           </button>
