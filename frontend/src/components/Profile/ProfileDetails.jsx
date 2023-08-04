@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCurrUser } from "../../utils/getUser";
 import { DataGrid } from "@material-ui/data-grid";
 import { addressTypeData, tableColumns } from "../../static/data";
@@ -9,6 +9,8 @@ import axios from "axios";
 import Modal from "../modal/Modal";
 import { RxCross1 } from "react-icons/rx";
 import { Country, State } from "country-state-city";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrdersOfUser } from "../../redux/userOrdersSlice";
 
 const orders = [
   {
@@ -44,7 +46,7 @@ function ProfileDetails({ active }) {
       {active === 1 && <ProfileForm currUser={currUser} />}
 
       {/* All Orders Section */}
-      {active === 2 && <AllOrders row={row} columns={tableColumns} />}
+      {active === 2 && <AllOrders columns={tableColumns} currUser={currUser} />}
 
       {/* Refund Orders Section */}
       {active === 3 && <AllRefundOrders row={row} columns={tableColumns} />}
@@ -164,7 +166,41 @@ function ProfileForm({ currUser }) {
   );
 }
 
-function AllOrders({ row, columns }) {
+function AllOrders({ columns, currUser }) {
+  const dispatch = useDispatch();
+
+  const { orders } = useSelector((state) => state.userOrders);
+
+  async function getAllOrderOfUser() {
+    try {
+      const result = await axios.get(
+        `${serverUrl}/order/get-all-orders/${currUser?._id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(getAllOrdersOfUser(result.data));
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
+
+  useEffect(() => {
+    getAllOrderOfUser();
+  }, []);
+
+  const row = [];
+
+  orders &&
+    orders.forEach((item) => {
+      row.push({
+        id: item._id,
+        itemsQty: item.cart.length,
+        total: "US$ " + item.totalPrice,
+        status: item.status,
+      });
+    });
+
   return (
     <DataGrid
       rows={row}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   Login,
@@ -23,8 +24,9 @@ import {
   ShopCreateProductPage,
   ShopAllProducts,
   ShopAllCoupons,
+  ShopAllOrders,
+  ShopOrdersDetails,
 } from "./ShopRoutes.js";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { serverUrl } from "./utils/uploadFile.js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -150,6 +152,22 @@ function App() {
             <ProtectedRoute>
               <OrderSuccessPage />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-orders"
+          element={
+            <ShopProtectedRoute>
+              <ShopAllOrders />
+            </ShopProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <ShopProtectedRoute>
+              <ShopOrdersDetails />
+            </ShopProtectedRoute>
           }
         />
       </Routes>

@@ -56,7 +56,7 @@ const Payment = () => {
 
   const order = {
     cart: cartData,
-    shippingAddress: orderData?.shipping,
+    shippingAddress: orderData?.shippingAddress,
     user: currUser && currUser,
     totalPrice: orderData?.totalPrice,
   };
@@ -134,7 +134,7 @@ const Payment = () => {
       )
       .then((res) => {
         setOpen(false);
-        toast.success("Order successful!");
+        toast.success("Order Placed successful!");
         navigate("/order/success");
       });
   }
