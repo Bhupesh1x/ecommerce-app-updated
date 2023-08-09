@@ -32,12 +32,12 @@ const striptInputStyles = {
 
 const Payment = () => {
   const [orderData, setOrderData] = useState({});
-  const [open, setOpen] = useState({});
   const currUser = getCurrUser();
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const cartData = useSelector((state) => state.cart.value);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!cartData?.length) {
@@ -63,6 +63,7 @@ const Payment = () => {
 
   const paymentHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const config = {
         headers: {
@@ -87,6 +88,7 @@ const Payment = () => {
 
       if (result.error) {
         toast.error(result.error.message);
+        setIsLoading(false);
       } else {
         if (result.paymentIntent.status === "succeeded") {
           const paymentInfo = {
@@ -102,19 +104,21 @@ const Payment = () => {
               config
             )
             .then((res) => {
-              setOpen(false);
               toast.success("Order successful!");
               navigate("/order/success");
+              setIsLoading(false);
             });
         }
       }
     } catch (error) {
       toast.error(error);
+      setIsLoading(false);
     }
   };
 
   async function cashOnDeliveryHandler(e) {
     e.preventDefault();
+    setIsLoading(true);
 
     const config = {
       headers: {
@@ -133,9 +137,9 @@ const Payment = () => {
         config
       )
       .then((res) => {
-        setOpen(false);
         toast.success("Order Placed successful!");
         navigate("/order/success");
+        setIsLoading(false);
       });
   }
 
@@ -145,10 +149,9 @@ const Payment = () => {
         <div className="w-full md:w-[65%]">
           <PaymentInfo
             currUser={currUser}
-            open={open}
-            setOpen={setOpen}
             paymentHandler={paymentHandler}
             cashOnDeliveryHandler={cashOnDeliveryHandler}
+            isLoading={isLoading}
           />
         </div>
         <div className="w-full md:w-[35%] md:mt-0 mt-8">
@@ -161,10 +164,9 @@ const Payment = () => {
 
 const PaymentInfo = ({
   currUser,
-  open,
-  setOpen,
   paymentHandler,
   cashOnDeliveryHandler,
+  isLoading,
 }) => {
   const [select, setSelect] = useState(1);
 
@@ -224,8 +226,11 @@ const PaymentInfo = ({
                   />
                 </div>
               </div>
-              <button className="bg-black text-white my-4 px-8  py-3  rounded-lg">
-                Submit
+              <button
+                disabled={isLoading}
+                className="bg-black text-white my-4 px-8  py-3 rounded-lg disabled:cursor-not-allowed disabled:opacity-80"
+              >
+                {isLoading ? "Processing" : "Submit"}
               </button>
             </form>
           </div>
@@ -255,8 +260,11 @@ const PaymentInfo = ({
         {select === 3 ? (
           <div className="w-full flex">
             <form className="w-full" onSubmit={cashOnDeliveryHandler}>
-              <button className="bg-black text-white mt-4 px-8  py-3  rounded-lg">
-                Confirm
+              <button
+                disabled={isLoading}
+                className="bg-black text-white mt-4 px-8  py-3 rounded-lg disabled:cursor-not-allowed disabled:opacity-80"
+              >
+                {isLoading ? "Processing" : "Submit"}
               </button>
             </form>
           </div>

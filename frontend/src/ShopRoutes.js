@@ -4,7 +4,7 @@ import ShopCreateProductPage from "./pages/shop/ShopCreateProductPage";
 import ShopAllProducts from "./pages/shop/ShopAllProducts";
 import ShopAllCoupons from "./pages/shop/ShopAllCoupons";
 import ShopAllOrders from "./pages/shop/ShopAllOrders";
-import ShopOrdersDetails from "./pages/shop/ShopOrdersDetails";
+import OrdersDetailsPage from "./pages/shop/OrdersDetailsPage";
 
 export {
   ShopHomePage,
@@ -13,5 +13,5 @@ export {
   ShopAllProducts,
   ShopAllCoupons,
   ShopAllOrders,
-  ShopOrdersDetails,
+  OrdersDetailsPage,
 };

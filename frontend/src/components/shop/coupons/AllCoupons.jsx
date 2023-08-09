@@ -129,6 +129,11 @@ function AllCoupons() {
       });
     });
 
+  useEffect(() => {
+    const body = document.querySelector("body");
+    body.style.overflow = open ? "hidden" : "auto";
+  }, [open]);
+
   return (
     <div className="w-[80%] bg-white shadow-md border border-gray-300 rounded-md p-4 mx-auto">
       <button
@@ -149,7 +154,7 @@ function AllCoupons() {
       </div>
 
       {open && (
-        <Modal>
+        <Modal isOpen={open}>
           <RxCross1
             size={20}
             onClick={() => setOpen(false)}

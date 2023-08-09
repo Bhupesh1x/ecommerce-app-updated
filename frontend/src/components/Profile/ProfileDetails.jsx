@@ -400,6 +400,11 @@ function Address() {
     }
   }
 
+  useEffect(() => {
+    const body = document.querySelector("body");
+    body.style.overflow = isOpenModal ? "hidden" : "auto";
+  }, [isOpenModal]);
+
   return (
     <>
       <div className="flex items-center justify-between mb-4">
@@ -440,7 +445,7 @@ function Address() {
       )}
 
       {isOpenModal && (
-        <Modal>
+        <Modal isOpen={isOpenModal}>
           <RxCross1
             size={20}
             onClick={() => setIsOpenModal(false)}

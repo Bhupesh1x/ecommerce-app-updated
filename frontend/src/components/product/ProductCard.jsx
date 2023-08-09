@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillStar,
   AiOutlineEye,
@@ -17,6 +17,11 @@ function ProductCard({ product }) {
   function handleAddToCart(product) {
     dispatch(addToCart(product));
   }
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    body.style.overflow = open ? "hidden" : "auto";
+  }, [open]);
 
   return (
     <div className="w-full  bg-white rounded-lg shadow-lg p-3 relative cursor-pointer border border-gray-300 hover:border-gray-400">

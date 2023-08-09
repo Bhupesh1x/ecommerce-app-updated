@@ -25,15 +25,17 @@ import {
   ShopAllProducts,
   ShopAllCoupons,
   ShopAllOrders,
-  ShopOrdersDetails,
+  OrdersDetailsPage,
 } from "./ShopRoutes.js";
 import axios from "axios";
 import { serverUrl } from "./utils/uploadFile.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { getCurrUser } from "./utils/getUser.js";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+  const currUser = getCurrUser();
 
   async function getStripeApiKey() {
     const { data } = await axios.get(`${serverUrl}/payment/stript-api-key`);
@@ -41,10 +43,10 @@ function App() {
   }
 
   useEffect(() => {
-    if (stripeApiKey === "") {
+    if (stripeApiKey === "" && currUser) {
       getStripeApiKey();
     }
-  }, [stripeApiKey]);
+  }, [currUser, stripeApiKey]);
 
   return (
     <div className="bg-[#F6F6F5] overflow-hidden">
@@ -76,6 +78,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/order/:id"
+          element={
+            <ProtectedRoute>
+              <OrdersDetailsPage isUser={true} />
             </ProtectedRoute>
           }
         />
@@ -166,7 +176,7 @@ function App() {
           path="/order/:id"
           element={
             <ShopProtectedRoute>
-              <ShopOrdersDetails />
+              <OrdersDetailsPage />
             </ShopProtectedRoute>
           }
         />
