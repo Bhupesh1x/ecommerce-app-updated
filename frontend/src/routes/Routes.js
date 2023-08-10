@@ -10,7 +10,7 @@ import ProfilePage from "../pages/ProfilePage";
 import ShopCreatePage from "../pages/ShopCreatePage";
 import CheckoutPage from "../pages/CheckoutPage";
 import PaymentPage from "../pages/PaymentPage";
-import OrderSuccessPage from "../pages/OrderSucessPage";
+import OrderSuccessPage from "../pages/OrderSuccessPage";
 
 export {
   Login,

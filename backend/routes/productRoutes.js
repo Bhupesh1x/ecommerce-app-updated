@@ -1,6 +1,7 @@
 const express = require("express");
 const Shop = require("../model/shopModel");
 const Product = require("../model/productModel");
+const Order = require("../model/orderModel");
 
 const { isSellerAuthenticated } = require("../middleware/sellerAuth");
 
@@ -52,7 +53,7 @@ router.delete(
             "Product not found with the specific id Or you don't have permission to delete this product!"
           );
       }
-      res.status(200).send("Product deleted sucessfully!");
+      res.status(200).send("Product deleted successfully!");
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -75,6 +76,56 @@ router.get("/get-product-by-id/:id", async (req, res) => {
       return res.status(400).send("No Product Found With This Id!");
     }
     res.status(200).json(product);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
+router.put("/create-product-review", async (req, res) => {
+  const { user, rating, message, productId, orderId } = req.body;
+  try {
+    const product = await Product.findById(productId);
+
+    const review = {
+      user,
+      rating,
+      message,
+      productId,
+    };
+
+    const isReviewed = product?.reviews?.find(
+      (review) => review.user._id === req.user._id
+    );
+
+    if (isReviewed) {
+      product.reviews.forEach((review) => {
+        if (review.user._id === req.user._id) {
+          (review.rating = rating),
+            (review.message = message),
+            (review.user = user);
+        }
+      });
+    } else {
+      product.reviews.push(review);
+    }
+
+    let avg = 0;
+
+    product.reviews.forEach((review) => {
+      avg += review.rating;
+    });
+
+    product.ratings = avg / product.reviews.length;
+
+    await product.save({ validateBeforeSave: false });
+
+    await Order.findByIdAndUpdate(
+      orderId,
+      { $set: { "cart.$[elem].isReviewed": true } },
+      { arrayFilters: [{ "elem._id": productId }], new: true }
+    );
+
+    res.status(200).json("Review Added successfully");
   } catch (error) {
     return res.status(400).send(error);
   }

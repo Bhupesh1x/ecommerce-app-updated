@@ -7,6 +7,7 @@ import { serverUrl } from "../../utils/uploadFile";
 import Modal from "../modal/Modal";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { getCurrUser } from "../../utils/getUser";
 
 const orderStatus = [
   "Processing",
@@ -23,7 +24,9 @@ function OrderDetails({ order, isUser, id }) {
   const [openModal, setOpenModal] = useState(false);
   const [rating, setRating] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isReviewed, setIsReviewed] = useState(false);
   const navigate = useNavigate();
+  const currUser = getCurrUser();
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -52,6 +55,58 @@ function OrderDetails({ order, isUser, id }) {
   function handleOpenReviewModel(order) {
     setOpenModal(true);
     setSelectedOrder(order);
+  }
+
+  async function handleSubmitReview() {
+    const notification = () => toast("Adding you review...");
+    try {
+      const data = {
+        user: currUser,
+        rating,
+        message: comment,
+        productId: selectedOrder._id,
+        orderId: id,
+      };
+
+      const result = await axios.put(
+        `${serverUrl}/product/create-product-review`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(result.data, {
+        id: notification,
+      });
+      setIsReviewed(true);
+      setOpenModal(false);
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
+
+  async function handleOrderReturn() {
+    const notification = () => toast("Updating request for return order...");
+    try {
+      const data = {
+        status: "Processing return",
+      };
+
+      const result = await axios.put(
+        `${serverUrl}/order/return-order/${id}`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(result.data, {
+        id: notification,
+      });
+      setIsReviewed(true);
+      setOpenModal(false);
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
   }
 
   return (
@@ -101,9 +156,10 @@ function OrderDetails({ order, isUser, id }) {
                 </p>
               </div>
             </div>
-            {order.status === "Delivered" && (
+            {order.status === "Delivered" && !cartInfo?.isReviewed && (
               <button
-                className="w-fit bg-black text-white mt-4 px-8 py-3 rounded-lg"
+                disabled={isReviewed}
+                className="w-fit bg-black text-white mt-4 px-8 py-3 rounded-lg disabled:opacity-70 disabled:cursor-not-allowed"
                 onClick={() => handleOpenReviewModel(cartInfo)}
               >
                 Write a review
@@ -130,9 +186,12 @@ function OrderDetails({ order, isUser, id }) {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h4 className="pt-3 text-lg font-[600]">Payment Info:</h4>
+            <h4 className="pt-3 text-lg font-[600]">Order Info:</h4>
             <h4 className="pt-3">
-              Status:{" "}
+              Order Status: <strong>{order?.status}</strong>
+            </h4>
+            <h4 className="pt-3">
+              Payment Status:{" "}
               <strong>
                 {order?.paymentInfo?.status
                   ? order?.paymentInfo?.status
@@ -141,6 +200,15 @@ function OrderDetails({ order, isUser, id }) {
             </h4>
           </div>
         </div>
+        {isUser && order.status === "Delivered" && (
+          <button
+            className="bg-black text-white my-4 px-8 py-3 rounded-lg w-fit text-center"
+            onClick={handleOrderReturn}
+          >
+            Return Order
+          </button>
+        )}
+
         {!isUser ? (
           <>
             <h4 className="pt-3 text-lg font-[600]">Order Status:</h4>
@@ -234,7 +302,7 @@ function OrderDetails({ order, isUser, id }) {
 
             <button
               className="bg-black text-white my-4 px-8 py-3 rounded-lg w-full"
-              // onClick={() => handleOpenReviewModel(cartInfo)}
+              onClick={handleSubmitReview}
             >
               Submit
             </button>

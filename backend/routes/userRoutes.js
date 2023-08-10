@@ -170,7 +170,7 @@ router.put("/update-user-password", isAuthenticated, async (req, res) => {
 
     await user.save();
 
-    res.status(200).send("Password Changed Sucessfully");
+    res.status(200).send("Password Changed Successfully");
   } catch (error) {
     return res.status(500).send(error);
   }

@@ -51,7 +51,7 @@ router.delete(
             "Coupon Code not found with the specific id Or you don't have permission to delete this Coupon Code!"
           );
       }
-      res.status(200).send("Coupon Code deleted sucessfully!");
+      res.status(200).send("Coupon Code deleted successfully!");
     } catch (error) {
       return res.status(400).send(error);
     }

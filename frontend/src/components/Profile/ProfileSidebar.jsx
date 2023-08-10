@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  AiOutlineCreditCard,
-  AiOutlineLogin,
-  AiOutlineMessage,
-} from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
-import { MdOutlineTrackChanges } from "react-icons/md";
 import { TbAddressBook } from "react-icons/tb";
 import { RxPerson } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +29,7 @@ function ProfileSidebar({ active, setActive }) {
   return (
     <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-4">
       <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[3.5rem]"
         onClick={() => setActive(1)}
       >
         <RxPerson size={20} color={active === 1 ? "red" : ""} />
@@ -47,7 +42,7 @@ function ProfileSidebar({ active, setActive }) {
         </span>
       </div>
       <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[3.5rem]"
         onClick={() => setActive(2)}
       >
         <HiOutlineShoppingBag size={20} color={active === 2 ? "red" : ""} />
@@ -58,73 +53,48 @@ function ProfileSidebar({ active, setActive }) {
         </span>
       </div>
       <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[3.5rem]"
         onClick={() => setActive(3)}
       >
         <HiOutlineReceiptRefund size={20} color={active === 3 ? "red" : ""} />
         <span
           className={`pl-3 ${active === 3 ? "text-[red]" : ""} md:block hidden`}
         >
-          Refunds
+          Returned Orders
         </span>
       </div>
 
       <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
-        // onClick={() => setActive(4) || navigate("/inbox")}
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[3.5rem]"
         onClick={() => setActive(4)}
       >
-        <AiOutlineMessage size={20} color={active === 4 ? "red" : ""} />
+        <RiLockPasswordLine size={20} color={active === 4 ? "red" : ""} />
         <span
           className={`pl-3 ${active === 4 ? "text-[red]" : ""} md:block hidden`}
-        >
-          Inbox
-        </span>
-      </div>
-
-      <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
-        onClick={() => setActive(5)}
-      >
-        <MdOutlineTrackChanges size={20} color={active === 5 ? "red" : ""} />
-        <span
-          className={`pl-3 ${active === 5 ? "text-[red]" : ""} md:block hidden`}
-        >
-          Track Order
-        </span>
-      </div>
-
-      <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
-        onClick={() => setActive(6)}
-      >
-        <RiLockPasswordLine size={20} color={active === 6 ? "red" : ""} />
-        <span
-          className={`pl-3 ${active === 6 ? "text-[red]" : ""} md:block hidden`}
         >
           Change Password
         </span>
       </div>
 
       <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
-        onClick={() => setActive(7)}
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[3.5rem]"
+        onClick={() => setActive(5)}
       >
-        <TbAddressBook size={20} color={active === 7 ? "red" : ""} />
+        <TbAddressBook size={20} color={active === 5 ? "red" : ""} />
         <span
-          className={`pl-3 ${active === 7 ? "text-[red]" : ""} md:block hidden`}
+          className={`pl-3 ${active === 5 ? "text-[red]" : ""} md:block hidden`}
         >
           Address
         </span>
       </div>
 
       <div
-        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-8"
+        className="flex items-center justify-center md:justify-start cursor-pointer w-full mb-[3.5rem]"
         onClick={logoutHandler}
       >
-        <AiOutlineLogin size={20} color={active === 8 ? "red" : ""} />
+        <AiOutlineLogin size={20} color={active === 6 ? "red" : ""} />
         <span
-          className={`pl-3 ${active === 8 ? "text-[red]" : ""} md:block hidden`}
+          className={`pl-3 ${active === 6 ? "text-[red]" : ""} md:block hidden`}
         >
           Log out
         </span>

@@ -85,7 +85,7 @@ function CreateProductOrEvent({ isEvent }) {
         withCredentials: true,
       });
       toast.success(
-        `New ${isEvent ? "event" : "product"} created sucessfully`,
+        `New ${isEvent ? "event" : "product"} created successfully`,
         {
           id: notification,
         }

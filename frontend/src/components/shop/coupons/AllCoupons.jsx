@@ -55,7 +55,7 @@ function AllCoupons() {
       await axios.post(`${serverUrl}/couponCode/create-coupon-code`, data, {
         withCredentials: true,
       });
-      toast.success(`New coupon code created sucessfully`, {
+      toast.success(`New coupon code created successfully`, {
         id: notification,
       });
       setOpen(false);

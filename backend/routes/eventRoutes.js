@@ -52,7 +52,7 @@ router.delete(
             "Event not found with the specific id Or you don't have permission to delete this event!"
           );
       }
-      res.status(200).send("Event deleted sucessfully!");
+      res.status(200).send("Event deleted successfully!");
     } catch (error) {
       return res.status(400).send(error);
     }

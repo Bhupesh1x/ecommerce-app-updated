@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  AiFillStar,
-  AiOutlineEye,
-  AiOutlineShoppingCart,
-  AiOutlineStar,
-} from "react-icons/ai";
+import { AiOutlineEye, AiOutlineShoppingCart } from "react-icons/ai";
 import ProductDetailsModal from "./ProductDetailsModal";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
+import Ratings from "../ratings/Ratings";
 
 function ProductCard({ product }) {
   const [open, setOpen] = useState(false);
@@ -44,17 +40,7 @@ function ProductCard({ product }) {
         </h4>
       </Link>
 
-      <div className="flex">
-        <AiFillStar className="mr-2 cursor-pointer" size={20} color="#F6BA00" />
-        <AiFillStar className="mr-2 cursor-pointer" size={20} color="#F6BA00" />
-        <AiFillStar className="mr-2 cursor-pointer" size={20} color="#F6BA00" />
-        <AiFillStar className="mr-2 cursor-pointer" color="#F6BA00" size={20} />
-        <AiOutlineStar
-          size={20}
-          className="mr-2 cursor-pointer"
-          color="#F6BA00"
-        />
-      </div>
+      <Ratings ratings={product?.ratings} />
 
       <div className="flex items-center justify-between py-4">
         <div className="flex gap-2 items-center">

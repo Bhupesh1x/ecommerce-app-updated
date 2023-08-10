@@ -70,7 +70,7 @@ const Checkout = () => {
             setDiscountPrice(discountPrice);
             setCouponCodeData(res.data);
             setCouponCode("");
-            toast.success("Coupon code applied sucessfully!");
+            toast.success("Coupon code applied successfully!");
           }
         }
       });

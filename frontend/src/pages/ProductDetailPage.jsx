@@ -10,6 +10,7 @@ import axios from "axios";
 import Loader from "../components/Layout/Loader";
 import { addToCart } from "../redux/cartSlice";
 import { useDispatch } from "react-redux";
+import Ratings from "../components/ratings/Ratings";
 
 const tabsInfo = [
   {
@@ -172,9 +173,6 @@ function ProductDetailPage() {
                 </p>
               </div>
             </div>
-            <button className="px-4 py-2 bg-black rounded-lg text-white my-6">
-              Send Message
-            </button>
           </div>
         </div>
 
@@ -216,9 +214,48 @@ function ProductDeailsInfo({ productDetails }) {
           </>
         ) : null}
         {activeTab === 2 ? (
-          <>
-            <p className="text-center py-2">No Reviews yet!</p>
-          </>
+          <div className="hideScroll max-h-[50vh] overflow-y-scroll">
+            {productDetails?.reviews?.length === 0 ? (
+              <p className="text-center mt-3">No Reviews Yet</p>
+            ) : (
+              productDetails?.reviews?.map((reviews, index) => (
+                <>
+                  <div
+                    key={index}
+                    className="border border-gray-300 py-1 px-2 rounded-md my-2 hover:border-gray-400 cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3 my-2">
+                      <img
+                        src={reviews?.user?.avatar}
+                        className="h-[40px] w-[40px] rounded-full"
+                        alt=""
+                      />
+                      <p className="font-semibold">{reviews?.user?.name}</p>
+                    </div>
+
+                    <Ratings ratings={reviews?.rating} />
+                    <p className="font-semibold my-2">{reviews.message}</p>
+                  </div>
+                  <div
+                    key={index}
+                    className="border border-gray-300 py-1 px-2 rounded-md my-2 hover:border-gray-400 cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3 my-2">
+                      <img
+                        src={reviews?.user?.avatar}
+                        className="h-[40px] w-[40px] rounded-full"
+                        alt=""
+                      />
+                      <p className="font-semibold">{reviews?.user?.name}</p>
+                    </div>
+
+                    <Ratings ratings={reviews?.rating} />
+                    <p className="font-semibold my-2">{reviews.message}</p>
+                  </div>
+                </>
+              ))
+            )}
+          </div>
         ) : null}
         {activeTab === 3 ? (
           <div className="flex flex-col md:flex-row gap-4 py-4">
@@ -235,14 +272,10 @@ function ProductDeailsInfo({ productDetails }) {
                       {productDetails.shop.name}
                     </p>
                   </Link>
-                  <p className="text-base text-gray-500">
-                    ({productDetails.shop?.ratings}) Ratings
-                  </p>
                 </div>
               </div>
-              <p className="py-3">{productDetails.shop?.desc}</p>
             </div>
-            <div className="space-y-3 w-[50%] text-right font-bold">
+            <div className="w-[50%] text-right font-bold">
               <p>Joined on: {productDetails.shop.createdAt.slice(0, 10)}</p>
             </div>
           </div>

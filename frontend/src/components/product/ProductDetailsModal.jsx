@@ -59,9 +59,6 @@ function ProductDetailsModal({ setOpen, product }) {
               </p>
             </div>
           </div>
-          <button className="px-4 py-2 bg-black rounded-lg text-white my-6">
-            Send Message
-          </button>
 
           <p className="text-red-600">({product.sold_out}) Sold out</p>
         </div>

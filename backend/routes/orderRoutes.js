@@ -124,4 +124,21 @@ router.put(
   }
 );
 
+router.put("/return-order/:id", async (req, res) => {
+  const { status } = req.body;
+
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) return res.status(400).send("Order id is not valid!");
+
+    order.status = status;
+
+    await order.save({ validateBeforeSave: false });
+    res.status(200).json("Updated order return request successfully");
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
 module.exports = router;

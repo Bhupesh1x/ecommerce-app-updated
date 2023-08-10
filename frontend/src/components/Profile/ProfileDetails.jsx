@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getCurrUser } from "../../utils/getUser";
 import { DataGrid } from "@material-ui/data-grid";
 import { addressTypeData, tableColumns } from "../../static/data";
@@ -12,33 +12,12 @@ import { Country, State } from "country-state-city";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersOfUser } from "../../redux/userOrdersSlice";
 
-const orders = [
-  {
-    _id: "7463hvbfbhfbrtr28820221",
-    orderItems: [
-      {
-        name: "Iphone 14 pro max",
-      },
-    ],
-    totalPrice: 120,
-    orderStatus: "Processing",
-  },
-];
-
 function ProfileDetails({ active }) {
   const currUser = getCurrUser();
 
-  const row = [];
+  const dispatch = useDispatch();
 
-  orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.orderItems.length,
-        total: "US$ " + item.totalPrice,
-        status: item.orderStatus,
-      });
-    });
+  const { orders } = useSelector((state) => state.userOrders);
 
   return (
     <div className="w-[80%] bg-white shadow-md border border-gray-300 rounded-md p-4 max-h-[70vh] overflow-y-scroll">
@@ -46,19 +25,29 @@ function ProfileDetails({ active }) {
       {active === 1 && <ProfileForm currUser={currUser} />}
 
       {/* All Orders Section */}
-      {active === 2 && <AllOrders columns={tableColumns} currUser={currUser} />}
+      {active === 2 && (
+        <AllOrders
+          columns={tableColumns}
+          currUser={currUser}
+          dispatch={dispatch}
+          orders={orders}
+        />
+      )}
 
       {/* Refund Orders Section */}
-      {active === 3 && <AllRefundOrders row={row} columns={tableColumns} />}
-
-      {/* Track Orders Section */}
-      {active === 5 && <Trackorders row={row} columns={tableColumns} />}
+      {active === 3 && (
+        <AllRefundOrders
+          columns={tableColumns}
+          dispatch={dispatch}
+          orders={orders}
+        />
+      )}
 
       {/* Payment Section */}
-      {active === 6 && <ChangePassword />}
+      {active === 4 && <ChangePassword />}
 
       {/* Address Section */}
-      {active === 7 && <Address />}
+      {active === 5 && <Address />}
     </div>
   );
 }
@@ -166,11 +155,7 @@ function ProfileForm({ currUser }) {
   );
 }
 
-function AllOrders({ columns, currUser }) {
-  const dispatch = useDispatch();
-
-  const { orders } = useSelector((state) => state.userOrders);
-
+function AllOrders({ columns, currUser, dispatch, orders }) {
   async function getAllOrderOfUser() {
     try {
       const result = await axios.get(
@@ -186,8 +171,10 @@ function AllOrders({ columns, currUser }) {
   }
 
   useEffect(() => {
-    getAllOrderOfUser();
-  }, []);
+    if (!orders?.length) {
+      getAllOrderOfUser();
+    }
+  }, [orders?.length]);
 
   const row = [];
 
@@ -200,7 +187,6 @@ function AllOrders({ columns, currUser }) {
         status: item.status,
       });
     });
-
   return (
     <DataGrid
       rows={row}
@@ -212,19 +198,45 @@ function AllOrders({ columns, currUser }) {
   );
 }
 
-function AllRefundOrders({ row, columns }) {
-  return (
-    <DataGrid
-      rows={row}
-      columns={columns}
-      pageSize={10}
-      disableSelectionOnClick
-      autoHeight
-    />
-  );
-}
+function AllRefundOrders({ columns, currUser, dispatch, orders }) {
+  async function getAllOrderOfUser() {
+    try {
+      const result = await axios.get(
+        `${serverUrl}/order/get-all-orders/${currUser?._id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(getAllOrdersOfUser(result.data));
+    } catch (error) {
+      toast.error(error?.response?.data);
+    }
+  }
 
-function Trackorders({ row, columns }) {
+  useEffect(() => {
+    if (!orders?.length) {
+      getAllOrderOfUser();
+    }
+  }, [orders?.length]);
+
+  const refundOrders = useMemo(() => {
+    const data = orders.filter(
+      (order) => order?.status === "Processing return"
+    );
+    return data;
+  }, [orders]);
+
+  const row = [];
+
+  refundOrders &&
+    refundOrders.forEach((item) => {
+      row.push({
+        id: item._id,
+        itemsQty: item.cart.length,
+        total: "US$ " + item.totalPrice,
+        status: item.status,
+      });
+    });
   return (
     <DataGrid
       rows={row}

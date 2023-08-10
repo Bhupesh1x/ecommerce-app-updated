@@ -28,7 +28,7 @@ function Login({ isShop }) {
         withCredentials: true,
       });
       localStorage.setItem("ecommerceUser", JSON.stringify(result.data.user));
-      toast.success("Login Sucessfull", {
+      toast.success("Login Successfull", {
         id: notification,
       });
       navigate("/");
