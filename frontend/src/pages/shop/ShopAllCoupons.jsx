@@ -8,7 +8,7 @@ function ShopAllCoupons() {
     <div>
       <DashboardHeader />
       <div className="container px-6 flex gap-8 py-6">
-        <DashboardSidebar active={9} />
+        <DashboardSidebar active={7} />
         <AllCoupons />
       </div>
     </div>

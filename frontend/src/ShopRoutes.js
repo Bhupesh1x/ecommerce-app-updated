@@ -5,6 +5,7 @@ import ShopAllProducts from "./pages/shop/ShopAllProducts";
 import ShopAllCoupons from "./pages/shop/ShopAllCoupons";
 import ShopAllOrders from "./pages/shop/ShopAllOrders";
 import OrdersDetailsPage from "./pages/shop/OrdersDetailsPage";
+import ShopAllRefunds from "./pages/shop/ShopAllRefunds";
 
 export {
   ShopHomePage,
@@ -14,4 +15,5 @@ export {
   ShopAllCoupons,
   ShopAllOrders,
   OrdersDetailsPage,
+  ShopAllRefunds,
 };

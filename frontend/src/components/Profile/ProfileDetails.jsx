@@ -80,7 +80,7 @@ function ProfileForm({ currUser }) {
 
       if (isUploading) {
         return toast.error("Please wait for image to upload", {
-          id: "Uplaoding",
+          id: "Uploading",
         });
       }
 
@@ -96,9 +96,7 @@ function ProfileForm({ currUser }) {
         id: notification,
       });
     } catch (error) {
-      toast.error(error?.response?.data, {
-        id: notification,
-      });
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -166,7 +164,7 @@ function AllOrders({ columns, currUser, dispatch, orders }) {
       );
       dispatch(getAllOrdersOfUser(result.data));
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -209,7 +207,7 @@ function AllRefundOrders({ columns, currUser, dispatch, orders }) {
       );
       dispatch(getAllOrdersOfUser(result.data));
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -279,10 +277,7 @@ function ChangePassword() {
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data, {
-        id: notification,
-      });
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -384,9 +379,7 @@ function Address() {
       setAddress2("");
       setAddressType("");
     } catch (error) {
-      toast.error(error?.response?.data, {
-        id: notification,
-      });
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -406,9 +399,7 @@ function Address() {
       });
       window.location.reload();
     } catch (error) {
-      toast.error(error?.response?.data, {
-        id: notification,
-      });
+      toast.error(error?.response?.statusText);
     }
   }
 

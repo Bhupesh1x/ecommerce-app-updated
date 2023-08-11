@@ -34,7 +34,7 @@ function AllShopProductsOrEvents({ isEvent }) {
         dispatch(getAllProductsOfShop(result.data));
       }
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -52,7 +52,7 @@ function AllShopProductsOrEvents({ isEvent }) {
       });
       getAllShopProductsOrEvents();
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 

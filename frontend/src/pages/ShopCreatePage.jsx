@@ -57,9 +57,7 @@ function ShopCreatePage() {
 
       navigate("/");
     } catch (error) {
-      toast.error(error?.response?.data, {
-        id: notification,
-      });
+      toast.error(error?.response?.statusText);
     }
   }
 

@@ -88,8 +88,8 @@ router.put("/update-user-info", isAuthenticated, async (req, res) => {
   const { email, avatar, name } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).send("User exist with the email!");
+    if (!user) {
+      return res.status(400).send("User does not exist with the email!");
     }
 
     const result = await User.findByIdAndUpdate(

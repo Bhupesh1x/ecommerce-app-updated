@@ -20,7 +20,7 @@ function OrdersDetailsPage({ isUser }) {
       });
       setOrder(result.data);
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 

@@ -66,7 +66,7 @@ function ProductDetailPage() {
       setProductDetails(result.data);
       setIsLoading(false);
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
       setIsLoading(false);
     }
   }
@@ -219,40 +219,22 @@ function ProductDeailsInfo({ productDetails }) {
               <p className="text-center mt-3">No Reviews Yet</p>
             ) : (
               productDetails?.reviews?.map((reviews, index) => (
-                <>
-                  <div
-                    key={index}
-                    className="border border-gray-300 py-1 px-2 rounded-md my-2 hover:border-gray-400 cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 my-2">
-                      <img
-                        src={reviews?.user?.avatar}
-                        className="h-[40px] w-[40px] rounded-full"
-                        alt=""
-                      />
-                      <p className="font-semibold">{reviews?.user?.name}</p>
-                    </div>
-
-                    <Ratings ratings={reviews?.rating} />
-                    <p className="font-semibold my-2">{reviews.message}</p>
+                <div
+                  key={index}
+                  className="border border-gray-300 py-1 px-2 rounded-md my-2 hover:border-gray-400 cursor-pointer"
+                >
+                  <div className="flex items-center gap-3 my-2">
+                    <img
+                      src={reviews?.user?.avatar}
+                      className="h-[40px] w-[40px] rounded-full"
+                      alt=""
+                    />
+                    <p className="font-semibold">{reviews?.user?.name}</p>
                   </div>
-                  <div
-                    key={index}
-                    className="border border-gray-300 py-1 px-2 rounded-md my-2 hover:border-gray-400 cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 my-2">
-                      <img
-                        src={reviews?.user?.avatar}
-                        className="h-[40px] w-[40px] rounded-full"
-                        alt=""
-                      />
-                      <p className="font-semibold">{reviews?.user?.name}</p>
-                    </div>
 
-                    <Ratings ratings={reviews?.rating} />
-                    <p className="font-semibold my-2">{reviews.message}</p>
-                  </div>
-                </>
+                  <Ratings ratings={reviews?.rating} />
+                  <p className="font-semibold my-2">{reviews.message}</p>
+                </div>
               ))
             )}
           </div>

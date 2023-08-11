@@ -93,9 +93,7 @@ function CreateProductOrEvent({ isEvent }) {
 
       navigate(`${isEvent ? "/dashboard-events" : "/dashboard"}`);
     } catch (error) {
-      toast.error(error?.response?.data, {
-        id: notification,
-      });
+      toast.error(error?.response?.statusText);
     }
   }
 

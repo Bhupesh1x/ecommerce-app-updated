@@ -26,6 +26,7 @@ import {
   ShopAllCoupons,
   ShopAllOrders,
   OrdersDetailsPage,
+  ShopAllRefunds,
 } from "./ShopRoutes.js";
 import axios from "axios";
 import { serverUrl } from "./utils/uploadFile.js";
@@ -144,6 +145,14 @@ function App() {
           element={
             <ShopProtectedRoute>
               <ShopAllCoupons />
+            </ShopProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-refunds"
+          element={
+            <ShopProtectedRoute>
+              <ShopAllRefunds />
             </ShopProtectedRoute>
           }
         />

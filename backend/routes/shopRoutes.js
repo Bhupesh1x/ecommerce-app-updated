@@ -78,4 +78,31 @@ router.get("/get-shop-info/:id", async (req, res) => {
   }
 });
 
+router.put("/update-shop-info", isSellerAuthenticated, async (req, res) => {
+  const { email, avatar, name, desc, address, zipCode } = req.body;
+  try {
+    const shop = await Shop.findOne({ email });
+    if (!shop) {
+      return res.status(400).send("Shop does not exist with the email!");
+    }
+
+    const result = await Shop.findByIdAndUpdate(
+      req?.seller?._id,
+      {
+        name,
+        email,
+        avatar,
+        desc,
+        address,
+        zipCode,
+      },
+      { new: true }
+    );
+
+    res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
 module.exports = router;

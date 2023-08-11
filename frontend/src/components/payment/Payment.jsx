@@ -111,7 +111,7 @@ const Payment = () => {
         }
       }
     } catch (error) {
-      toast.error(error);
+      toast.error(error?.response?.statusText);
       setIsLoading(false);
     }
   };

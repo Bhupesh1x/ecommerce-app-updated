@@ -48,7 +48,7 @@ function OrderDetails({ order, isUser, id }) {
       });
       navigate("/dashboard-orders");
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -81,7 +81,7 @@ function OrderDetails({ order, isUser, id }) {
       setIsReviewed(true);
       setOpenModal(false);
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 
@@ -105,7 +105,7 @@ function OrderDetails({ order, isUser, id }) {
       setIsReviewed(true);
       setOpenModal(false);
     } catch (error) {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.statusText);
     }
   }
 

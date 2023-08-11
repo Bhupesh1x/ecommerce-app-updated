@@ -4,9 +4,8 @@ import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { VscNewFile } from "react-icons/vsc";
-import { CiMoneyBill, CiSettings } from "react-icons/ci";
+import { CiMoneyBill } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { BiMessageSquareDetail } from "react-icons/bi";
 import { HiOutlineReceiptRefund } from "react-icons/hi";
 
 const sidebarData = [
@@ -48,39 +47,21 @@ const sidebarData = [
   },
   {
     id: 7,
-    title: "Withdraw Money",
-    link: "/dashboard-withdraw-money",
-    Icon: CiMoneyBill,
-  },
-  {
-    id: 8,
-    title: "Shop Inbox",
-    link: "/dashboard-messages",
-    Icon: BiMessageSquareDetail,
-  },
-  {
-    id: 9,
     title: "Discount Codes",
     link: "/dashboard-coupons",
     Icon: AiOutlineGift,
   },
   {
-    id: 10,
+    id: 8,
     title: "Refunds",
     link: "/dashboard-refunds",
     Icon: HiOutlineReceiptRefund,
   },
-  {
-    id: 11,
-    title: "Settings",
-    link: "/dashboard-settings",
-    Icon: CiSettings,
-  },
 ];
 
-function DashboardSidebar({ active, setActive }) {
+function DashboardSidebar({ active }) {
   return (
-    <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-3 max-h-[80vh]">
+    <div className="w-[20%] bg-white shadow-md border border-gray-300 rounded-md p-3 min-h-[80vh] max-h-[80vh]">
       {sidebarData.map((sidebar, index) => (
         <Link
           to={sidebar.link}
