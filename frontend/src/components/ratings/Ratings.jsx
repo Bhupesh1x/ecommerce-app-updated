@@ -6,7 +6,7 @@ function Ratings({ ratings }) {
   return (
     <div className="flex items-center">
       {[1, 2, 3, 4, 5].map((rating) => (
-        <>
+        <div key={rating}>
           {rating <= ratings ? (
             <AiFillStar
               key={rating}
@@ -29,7 +29,7 @@ function Ratings({ ratings }) {
               className="mr-2 cursor-pointer"
             />
           )}
-        </>
+        </div>
       ))}
     </div>
   );

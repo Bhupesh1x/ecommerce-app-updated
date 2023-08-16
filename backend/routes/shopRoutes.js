@@ -55,7 +55,7 @@ router.post("/login-shop", async (req, res) => {
   }
 });
 
-router.get("/logout", isSellerAuthenticated, async (req, res) => {
+router.get("/logout", async (req, res) => {
   try {
     res.cookie("ecommerceToken", null, {
       httpOnly: true,

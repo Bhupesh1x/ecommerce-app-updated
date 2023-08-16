@@ -62,7 +62,7 @@ function ShopHomeDetails() {
         ))}
       </div>
       {active === 1 && (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-7 xl:grid-cols-5 xl:gap-9 my-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:gap-5 xl:grid-cols-4 xl:gap-7 my-4">
           {shopAllProducts &&
             shopAllProducts?.map((value, index) => (
               <ProductCard product={value} key={index} />

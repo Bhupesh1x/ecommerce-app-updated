@@ -33,7 +33,7 @@ function Login({ isShop }) {
       });
       navigate("/");
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -44,6 +44,24 @@ function Login({ isShop }) {
       navigate("/dashboard");
     }
   }, [currUser, isShop, navigate]);
+
+  function handleGuestUserLogin(e) {
+    setEmail("bhupesh@gmail.com");
+    setPassword("123456");
+
+    if (email && password) {
+      handleSubmit(e);
+    }
+  }
+
+  function handleGuestSellerLogin(e) {
+    setEmail("amazon@gmail.com");
+    setPassword("123456");
+
+    if (email && password) {
+      handleSubmit(e);
+    }
+  }
 
   return (
     <div className="h-[100vh]  flex flex-col items-center justify-center">
@@ -110,6 +128,30 @@ function Login({ isShop }) {
           <Link to={isShop ? "/shop-create" : "/sign-up"}>
             <span className="text-blue-500 font-semibold cursor-pointer">
               Sign Up
+            </span>
+          </Link>
+          <span className="mx-2">Or</span>
+          {isShop ? (
+            <span
+              className="text-blue-500 font-semibold cursor-pointer"
+              onClick={(e) => handleGuestSellerLogin(e)}
+            >
+              Guest Seller Login
+            </span>
+          ) : (
+            <span
+              className="text-blue-500 font-semibold cursor-pointer"
+              onClick={(e) => handleGuestUserLogin(e)}
+            >
+              Guest User Login
+            </span>
+          )}
+        </p>
+        <p className="my-4">
+          Login as a {isShop ? "User" : "seller"}?{" "}
+          <Link to={isShop ? "/login" : "/shop-login"}>
+            <span className="text-blue-500 font-semibold cursor-pointer">
+              {isShop ? "User Login" : "Shop Login"}
             </span>
           </Link>
         </p>

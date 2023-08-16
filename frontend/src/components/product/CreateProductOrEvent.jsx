@@ -91,7 +91,7 @@ function CreateProductOrEvent({ isEvent }) {
         }
       );
 
-      navigate(`${isEvent ? "/dashboard-events" : "/dashboard"}`);
+      navigate(`${isEvent ? "/dashboard-events" : "/dashboard-products"}`);
     } catch (error) {
       toast.error(error?.response?.statusText);
     }

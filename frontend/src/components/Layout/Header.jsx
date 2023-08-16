@@ -67,16 +67,20 @@ function Header() {
           />
           <AiOutlineSearch size={25} className="cursor-pointer text-gray-500" />
           {searchData?.length ? (
-            <div className="absolute left-0 top-9 bg-slate-50 border border-gray-300 rounded-md shadow-sm-2 z-[9] p-4">
+            <div className="absolute left-0 top-9 bg-slate-50 border border-gray-300 rounded-md shadow-sm-2 z-[9] p-4 w-full">
               {searchData?.map((data, index) => (
                 <Link to={`/product/${data._id}`} key={index}>
-                  <div className="flex items-start my-2 cursor-pointer">
+                  <div className="flex items-center my-2 cursor-pointer">
                     <img
                       src={`${data?.images[0]}`}
                       alt=""
                       className="w-[40px] h-[40px] mr-[10px]"
                     />
-                    <p>{`${data.name.substring(0, 30)}...`}</p>
+                    <p>
+                      {data.name > 25
+                        ? `${data.name.substring(0, 25)}...`
+                        : data.name}
+                    </p>
                   </div>
                 </Link>
               ))}
@@ -129,11 +133,13 @@ function Header() {
         {openMobileMenu ? (
           <div className="fixed top-0 left-0 bg-white w-[45%] md:w-[30%] shadow-md h-screen px-4 py-2 z-20">
             <div className="flex items-center justify-between my-2">
-              <img
-                src="https://shopo.quomodothemes.website/assets/images/logo.svg"
-                alt=""
-                className="w-[50%] object-contain"
-              />
+              <Link to="/">
+                <img
+                  src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+                  alt=""
+                  className="w-[50%] object-contain"
+                />
+              </Link>
               <RxCross1
                 size={20}
                 onClick={() => setOpenMobileMenu(false)}

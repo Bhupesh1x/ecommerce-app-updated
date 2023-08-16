@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-hot-toast";
 
 const initialState = {
   value: localStorage.getItem("eshopCartItems")
@@ -23,6 +24,7 @@ export const cartSlice = createSlice({
           ),
         };
         localStorage.setItem("eshopCartItems", JSON.stringify(data?.value));
+        toast.success("Item added to cart!");
         return data;
       } else {
         const data = {
@@ -30,6 +32,7 @@ export const cartSlice = createSlice({
           value: [...state.value, { ...items, qty: items.qty ? items.qty : 1 }],
         };
         localStorage.setItem("eshopCartItems", JSON.stringify(data?.value));
+        toast.success("Item added to cart!");
         return data;
       }
     },

@@ -91,7 +91,11 @@ function ProductDetailPage() {
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           {/* Images Container */}
           <div className="w-full md:w-[50%]">
-            <img src={productDetails?.images[selectedImage]} alt="" />
+            <img
+              src={productDetails?.images[selectedImage]}
+              alt=""
+              className="object-contain w-full max-w-[20rem]"
+            />
 
             <div className="flex items-center gap-4 my-4 w-full">
               <div
@@ -168,9 +172,7 @@ function ProductDetailPage() {
                     {productDetails.shop.name}
                   </p>
                 </Link>
-                <p className="text-base text-gray-500">
-                  ({productDetails.shop.ratings}) Ratings
-                </p>
+                <p className="text-base text-gray-500">(4 / 5) Ratings</p>
               </div>
             </div>
           </div>
@@ -187,12 +189,17 @@ function ProductDetailPage() {
 function ProductDeailsInfo({ productDetails }) {
   const [activeTab, setActiveTab] = useState(1);
 
+  console.log(
+    "productDetails?.reviews?.length",
+    productDetails?.reviews?.length
+  );
+
   return (
     <div className="w-full h-full bg-[#edeff8] px-6 py-3 min-h-[8rem] rounded-md shadow-md">
       <div className="flex items-center justify-between border-b border-gray-300">
         {tabsInfo.map((tab) => (
           <p
-            key={tab.id}
+            key={tab?.id}
             className={`font-semibold text-base md:text-xl relative cursor-pointer  ${
               activeTab === tab.id
                 ? "border-b-2 border-blue-600 text-blue-400"
@@ -215,7 +222,7 @@ function ProductDeailsInfo({ productDetails }) {
         ) : null}
         {activeTab === 2 ? (
           <div className="hideScroll max-h-[50vh] overflow-y-scroll">
-            {productDetails?.reviews?.length === 0 ? (
+            {!productDetails?.reviews?.length ? (
               <p className="text-center mt-3">No Reviews Yet</p>
             ) : (
               productDetails?.reviews?.map((reviews, index) => (

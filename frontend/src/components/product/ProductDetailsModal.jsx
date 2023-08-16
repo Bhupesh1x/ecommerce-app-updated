@@ -54,9 +54,7 @@ function ProductDetailsModal({ setOpen, product }) {
                   {product.shop.name}
                 </p>
               </Link>
-              <p className="text-base text-gray-500">
-                ({product.shop.ratings}) Ratings
-              </p>
+              <p className="text-base text-gray-500">(4 / 5) Ratings</p>
             </div>
           </div>
 

@@ -60,8 +60,8 @@ function AllShopProductsOrEvents({ isEvent }) {
     getAllShopProductsOrEvents();
   }, []);
 
-  function handleNavigate(product_name) {
-    navigate(`/product/${product_name}`);
+  function handleNavigate(id) {
+    navigate(`/product/${id}`);
   }
 
   const columns = useMemo(() => {
@@ -102,10 +102,8 @@ function AllShopProductsOrEvents({ isEvent }) {
         type: "number",
         sortable: false,
         renderCell: (params) => {
-          const d = params.row.name;
-          const product_name = d.replace(/\s+/g, "-");
           return (
-            <Button onClick={() => handleNavigate(product_name)}>
+            <Button onClick={() => handleNavigate(params.id)}>
               <AiOutlineEye size={20} />
             </Button>
           );

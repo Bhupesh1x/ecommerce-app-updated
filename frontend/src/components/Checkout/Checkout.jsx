@@ -309,8 +309,8 @@ const ShippingInfo = ({
       </h5>
       {showSavedAddress && (
         <>
-          {currUser?.addresses?.map((address) => (
-            <div className="w-full flex mt-1">
+          {currUser?.addresses?.map((address, index) => (
+            <div className="w-full flex mt-1" key={index}>
               <input
                 type="checkbox"
                 className="mr-3"
