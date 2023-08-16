@@ -26,7 +26,7 @@ router.post("/create-user", async (req, res) => {
 
     sendToken(userInfo, 201, res);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -51,7 +51,7 @@ router.post("/login-user", async (req, res) => {
     sendToken(isUserExist, 200, res);
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -66,7 +66,7 @@ router.get("/get-user", isAuthenticated, async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -80,7 +80,7 @@ router.get("/logout-user", async (req, res) => {
       message: "Log out successful!",
     });
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -104,7 +104,7 @@ router.put("/update-user-info", isAuthenticated, async (req, res) => {
 
     res.status(200).json(result);
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -128,7 +128,7 @@ router.put("/update-user-address", isAuthenticated, async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -145,7 +145,7 @@ router.delete("/delete-user-address/:id", isAuthenticated, async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -172,7 +172,7 @@ router.put("/update-user-password", isAuthenticated, async (req, res) => {
 
     res.status(200).send("Password Changed Successfully");
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 

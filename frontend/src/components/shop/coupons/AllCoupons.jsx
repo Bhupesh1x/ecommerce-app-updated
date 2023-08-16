@@ -32,7 +32,7 @@ function AllCoupons() {
       );
       setCoupouns(result.data);
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -61,7 +61,7 @@ function AllCoupons() {
       setOpen(false);
       getAllCouponCode();
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -77,7 +77,7 @@ function AllCoupons() {
       });
       getAllCouponCode();
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

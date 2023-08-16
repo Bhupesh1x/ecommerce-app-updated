@@ -77,7 +77,7 @@ function DashboardMain() {
       });
       dispatch(getAllProductsOfShop(result.data));
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -98,7 +98,7 @@ function DashboardMain() {
       setOrders(result.data);
       setDeliveredOrders(orderData);
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

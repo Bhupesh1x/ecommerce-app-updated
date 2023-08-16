@@ -23,7 +23,7 @@ function ProductsPage() {
       });
       dispatch(getAllProducts(result.data));
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -49,7 +49,7 @@ function ProductsPage() {
   }, [categoryData, productData]);
 
   return (
-    <div>
+    <div className="min-h-[100vh]">
       <Header />
       <Navbar activeNo={2} />
 

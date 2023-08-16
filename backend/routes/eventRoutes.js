@@ -19,7 +19,7 @@ router.post("/create-event", isSellerAuthenticated, async (req, res) => {
     const event = await Event.create(eventData);
     res.status(201).json({ event });
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -31,7 +31,7 @@ router.get(
       const events = await Event.find({ shopId: req.params.id });
       res.status(200).json(events);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -54,7 +54,7 @@ router.delete(
       }
       res.status(200).send("Event deleted successfully!");
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -64,7 +64,7 @@ router.get("/get-all-events", async (req, res) => {
     const events = await Event.find();
     res.status(200).json(events);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -73,7 +73,7 @@ router.get("/get-event-by-id/:id", async (req, res) => {
     const event = await Event.findById(req.params.id);
     res.status(200).json(event);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 

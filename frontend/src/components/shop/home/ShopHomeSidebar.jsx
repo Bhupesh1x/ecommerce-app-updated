@@ -33,7 +33,7 @@ function DashboardSidebar({ active, setActive }) {
       });
       setShopInfo(result.data);
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -51,7 +51,7 @@ function DashboardSidebar({ active, setActive }) {
       toast.success(result.data.message);
       navigate("/shop-login");
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -96,7 +96,7 @@ function DashboardSidebar({ active, setActive }) {
       window.location.reload();
       setOpenModal(false);
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

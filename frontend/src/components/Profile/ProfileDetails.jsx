@@ -96,7 +96,7 @@ function ProfileForm({ currUser }) {
         id: notification,
       });
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -164,7 +164,7 @@ function AllOrders({ columns, currUser, dispatch, orders }) {
       );
       dispatch(getAllOrdersOfUser(result.data));
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -207,7 +207,7 @@ function AllRefundOrders({ columns, currUser, dispatch, orders }) {
       );
       dispatch(getAllOrdersOfUser(result.data));
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -277,7 +277,7 @@ function ChangePassword() {
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -379,7 +379,7 @@ function Address() {
       setAddress2("");
       setAddressType("");
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 
@@ -399,7 +399,7 @@ function Address() {
       });
       window.location.reload();
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

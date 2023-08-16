@@ -38,7 +38,7 @@ router.post("/create-order", async (req, res) => {
 
     res.status(201).json(orders);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -49,7 +49,7 @@ router.get("/get-all-orders/:userId", async (req, res) => {
     });
     res.status(200).json(orders);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -65,7 +65,7 @@ router.get(
       });
       res.status(200).json(orders);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -78,7 +78,7 @@ router.get(
       const order = await Order.findById(req.params.id);
       res.status(200).json(order);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -119,7 +119,7 @@ router.put(
         await product.save({ validateBeforeSave: false });
       }
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -137,7 +137,7 @@ router.put("/return-order/:id", async (req, res) => {
     await order.save({ validateBeforeSave: false });
     res.status(200).json("Updated order return request successfully");
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 

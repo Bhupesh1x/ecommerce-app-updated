@@ -17,14 +17,16 @@ router.post("/process", async (req, res) => {
     );
     res.status(200).json({ client_secret: myPayment.client_secret });
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
 router.get("/stript-api-key", (req, res) => {
   try {
     res.status(200).json({ striptApiKey: process.env.STRIPE_API_KEY });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).send(`Error : ${error}`);
+  }
 });
 
 module.exports = router;

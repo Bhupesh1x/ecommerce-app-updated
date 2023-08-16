@@ -22,7 +22,7 @@ function ProfileSidebar({ active, setActive }) {
       toast.success(result.data.message);
       navigate("/login");
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

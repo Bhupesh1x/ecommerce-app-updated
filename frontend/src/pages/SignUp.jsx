@@ -52,7 +52,7 @@ function SignUp() {
 
       navigate("/");
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

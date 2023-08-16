@@ -34,7 +34,7 @@ function ShopHomeDetails() {
       });
       dispatch(getAllProductsOfShop(result.data));
     } catch (error) {
-      toast.error(error?.response?.statusText);
+      toast.error(error?.response?.data);
     }
   }
 

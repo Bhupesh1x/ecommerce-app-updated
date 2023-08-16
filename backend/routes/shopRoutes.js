@@ -26,7 +26,7 @@ router.post("/create-shop", async (req, res) => {
 
     sendToken(shopInfo, 201, res);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -51,7 +51,7 @@ router.post("/login-shop", async (req, res) => {
     sendToken(isShopExist, 200, res);
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -65,7 +65,7 @@ router.get("/logout", async (req, res) => {
       message: "Log out successful!",
     });
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -74,7 +74,7 @@ router.get("/get-shop-info/:id", async (req, res) => {
     const shop = await Shop.findById(req.params.id);
     res.status(200).json(shop);
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -101,7 +101,7 @@ router.put("/update-shop-info", isSellerAuthenticated, async (req, res) => {
 
     res.status(200).json(result);
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 

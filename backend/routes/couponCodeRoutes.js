@@ -21,7 +21,7 @@ router.post("/create-coupon-code", isSellerAuthenticated, async (req, res) => {
 
     res.status(201).json(couponCode);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -31,7 +31,7 @@ router.get("/get-coupon-code/:id", isSellerAuthenticated, async (req, res) => {
 
     res.status(200).json(couponsCode);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -53,7 +53,7 @@ router.delete(
       }
       res.status(200).send("Coupon Code deleted successfully!");
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -64,7 +64,7 @@ router.get("/get-coupon-value/:name", async (req, res) => {
 
     res.status(200).json(couponsCode);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 

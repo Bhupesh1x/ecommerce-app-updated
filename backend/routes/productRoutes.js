@@ -20,7 +20,7 @@ router.post("/create-product", isSellerAuthenticated, async (req, res) => {
     const product = await Product.create(productData);
     res.status(201).json({ product });
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -32,7 +32,7 @@ router.get(
       const products = await Product.find({ shopId: req.params.id });
       res.status(200).json(products);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -55,7 +55,7 @@ router.delete(
       }
       res.status(200).send("Product deleted successfully!");
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(`Error : ${error}`);
     }
   }
 );
@@ -65,7 +65,7 @@ router.get("/all-products", async (req, res) => {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -77,7 +77,7 @@ router.get("/get-product-by-id/:id", async (req, res) => {
     }
     res.status(200).json(product);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
@@ -127,7 +127,7 @@ router.put("/create-product-review", async (req, res) => {
 
     res.status(200).json("Review Added successfully");
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(500).send(`Error : ${error}`);
   }
 });
 
