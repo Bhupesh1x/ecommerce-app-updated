@@ -140,7 +140,7 @@ function OrderDetails({ order, isUser, id }) {
         {order?.cart?.map((cartInfo) => (
           <div
             key={cartInfo._id}
-            className="flex items-center w-full justify-between border-b border-gray-400"
+            className="flex items-center w-full justify-between border-b border-gray-400 pb-2"
           >
             <div className="flex items-center">
               <img
@@ -149,7 +149,7 @@ function OrderDetails({ order, isUser, id }) {
                 className="w-[80px] h-[80px]"
               />
 
-              <div>
+              <div className="ml-3">
                 <p className="text-lg font-semibold">{cartInfo?.name}</p>
                 <p className="text-gray-600">
                   US${cartInfo?.discountPrice} x {cartInfo?.qty}
@@ -189,14 +189,6 @@ function OrderDetails({ order, isUser, id }) {
             <h4 className="pt-3 text-lg font-[600]">Order Info:</h4>
             <h4 className="pt-3">
               Order Status: <strong>{order?.status}</strong>
-            </h4>
-            <h4 className="pt-3">
-              Payment Status:{" "}
-              <strong>
-                {order?.paymentInfo?.status
-                  ? order?.paymentInfo?.status
-                  : "Not Paid"}
-              </strong>
             </h4>
           </div>
         </div>
