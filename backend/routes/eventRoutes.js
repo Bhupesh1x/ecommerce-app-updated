@@ -77,4 +77,22 @@ router.get("/get-event-by-id/:id", async (req, res) => {
   }
 });
 
+router.delete("/delete-event/:id", async (req, res) => {
+  try {
+    const event = await Event.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!event) {
+      res
+        .status(404)
+        .send(
+          "Event not found with the specific id Or you don't have permission to delete this event!"
+        );
+    }
+    res.status(200).send("Event deleted successfully!");
+  } catch (error) {
+    return res.status(500).send(`Error : ${error}`);
+  }
+});
+
 module.exports = router;

@@ -8,8 +8,9 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { getCurrUser } from "../utils/getUser";
 
 function ShopCreatePage() {
+  const currUser = getCurrUser();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(currUser?.email ? currUser?.email : "");
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState();
   const [password, setPassword] = useState("");
@@ -18,7 +19,6 @@ function ShopCreatePage() {
   const [avatar, setAvatar] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
-  const currUser = getCurrUser();
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
@@ -93,6 +93,7 @@ function ShopCreatePage() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={currUser}
         />
 
         <div className="my-3 flex items-center">

@@ -46,7 +46,7 @@ function Login({ isShop }) {
   }, [currUser, isShop, navigate]);
 
   function handleGuestUserLogin(e) {
-    setEmail("bhupesh@gmail.com");
+    setEmail("guest@gmail.com");
     setPassword("123456");
 
     if (email && password) {
@@ -55,7 +55,7 @@ function Login({ isShop }) {
   }
 
   function handleGuestSellerLogin(e) {
-    setEmail("amazon@gmail.com");
+    setEmail("guestshop@gmail.com");
     setPassword("123456");
 
     if (email && password) {

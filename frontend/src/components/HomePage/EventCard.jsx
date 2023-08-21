@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { serverUrl } from "../../utils/uploadFile";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function EventCard({ event }) {
+  useEffect(() => {
+    const endDate = new Date(event?.end_date);
+    const currDate = new Date();
+
+    async function handleDelete() {
+      const url = `${serverUrl}/event/delete-event/${event?._id}`;
+      try {
+        const result = await axios.delete(url, {
+          withCredentials: true,
+        });
+        toast.success(result.data);
+      } catch (error) {
+        toast.error(error?.response?.data);
+      }
+    }
+
+    if (endDate < currDate) {
+      handleDelete();
+    }
+  }, [event]);
+
   return (
     <div className="px-6 bg-white py-6 shadow-md rounded-md lg:flex lg:items-center">
       <img

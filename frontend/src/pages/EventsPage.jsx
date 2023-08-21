@@ -34,9 +34,13 @@ function EventsPage() {
       <Header />
       <Navbar activeNo={3} />
 
-      {eventData.map((event) => (
-        <EventCard key={event?._id} event={event} />
-      ))}
+      {eventData.length ? (
+        eventData.map((event) => <EventCard key={event?._id} event={event} />)
+      ) : (
+        <p className="text-center my-12 text-2xl font-semibold">
+          There are no ongoing events.
+        </p>
+      )}
     </div>
   );
 }
