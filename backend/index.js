@@ -27,6 +27,10 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config();
 }
 
+app.use("/test", (req, res) => {
+  res.send("Hello world");
+});
+
 app.use("/api/user", userRoutes);
 app.use("/api/shop", shopRoutes);
 app.use("/api/product", productRoutes);
