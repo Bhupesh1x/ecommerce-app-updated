@@ -16,7 +16,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: "https://ecommerce-mernn-app.vercel.app/",
+    origin: "https://ecommerce-mernn-app.vercel.app",
     credentials: true,
   })
 );
