@@ -15,7 +15,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://ecommerce-mernn-app.vercel.app/",
+    origin: "https://ecommerce-mernn-app.vercel.app",
     credentials: true,
   })
 );
