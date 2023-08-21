@@ -189,11 +189,6 @@ function ProductDetailPage() {
 function ProductDeailsInfo({ productDetails }) {
   const [activeTab, setActiveTab] = useState(1);
 
-  console.log(
-    "productDetails?.reviews?.length",
-    productDetails?.reviews?.length
-  );
-
   return (
     <div className="w-full h-full bg-[#edeff8] px-6 py-3 min-h-[8rem] rounded-md shadow-md">
       <div className="flex items-center justify-between border-b border-gray-300">

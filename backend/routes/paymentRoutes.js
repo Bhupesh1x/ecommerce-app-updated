@@ -1,6 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
+const { isAuthenticated } = require("../middleware/auth");
 
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
@@ -21,7 +22,7 @@ router.post("/process", async (req, res) => {
   }
 });
 
-router.get("/stript-api-key", (req, res) => {
+router.get("/stripe-api-key", isAuthenticated, (req, res) => {
   try {
     res.status(200).json({ striptApiKey: process.env.STRIPE_API_KEY });
   } catch (error) {
