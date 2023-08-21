@@ -12,6 +12,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const cors = require("cors");
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(
   cors({
