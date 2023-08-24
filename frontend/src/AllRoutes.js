@@ -133,9 +133,11 @@ function AllRoutes({ stripeApiKey }) {
         <Route
           path="/user/order/:id"
           element={
-            <ProtectedRoute>
-              <OrdersDetailsPage isUser={true} />
-            </ProtectedRoute>
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute>
+                <OrdersDetailsPage isUser={true} />
+              </ProtectedRoute>
+            </Suspense>
           }
         />
         <Route
