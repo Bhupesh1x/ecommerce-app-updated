@@ -158,9 +158,7 @@ function AllRoutes({ stripeApiKey }) {
           path="/shop/:id"
           element={
             <Suspense fallback={<Loader />}>
-              <ShopProtectedRoute>
-                <ShopHomePage />
-              </ShopProtectedRoute>
+              <ShopHomePage />
             </Suspense>
           }
         />
