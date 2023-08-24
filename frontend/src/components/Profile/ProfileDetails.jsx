@@ -169,10 +169,8 @@ function AllOrders({ columns, currUser, dispatch, orders }) {
   }
 
   useEffect(() => {
-    if (!orders?.length) {
-      getAllOrderOfUser();
-    }
-  }, [orders?.length]);
+    getAllOrderOfUser();
+  }, []);
 
   const row = [];
 

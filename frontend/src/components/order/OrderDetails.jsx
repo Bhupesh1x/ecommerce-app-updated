@@ -140,13 +140,13 @@ function OrderDetails({ order, isUser, id }) {
         {order?.cart?.map((cartInfo) => (
           <div
             key={cartInfo._id}
-            className="flex items-center w-full justify-between border-b border-gray-400 pb-2"
+            className="flex items-center w-full justify-between border-b border-gray-400 pb-2 mb-2"
           >
             <div className="flex items-center">
               <img
                 src={cartInfo?.images[0]}
                 alt=""
-                className="w-[80px] h-[80px]"
+                className="max-w-[80px] max-h-[80px] object-contain"
               />
 
               <div className="ml-3">

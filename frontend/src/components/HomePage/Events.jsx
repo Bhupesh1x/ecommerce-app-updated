@@ -22,10 +22,8 @@ function Events() {
   }
 
   useEffect(() => {
-    if (!eventData.length) {
-      getAllEventsData();
-    }
-  }, [eventData.length]);
+    getAllEventsData();
+  }, []);
 
   if (!eventData.length) {
     return null;

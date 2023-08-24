@@ -44,7 +44,7 @@ router.delete(
     try {
       const product = await Product.findOneAndDelete({
         _id: req.params.id,
-        shopId: req.seller._id,
+        shopId: req.seller?._id,
       });
       if (!product) {
         res
@@ -94,19 +94,19 @@ router.put("/create-product-review", async (req, res) => {
     };
 
     const isReviewed = product?.reviews?.find(
-      (review) => review.user._id === req.user._id
+      (review) => review.user?._id === req.user?._id
     );
 
     if (isReviewed) {
       product.reviews.forEach((review) => {
-        if (review.user._id === req.user._id) {
+        if (review.user?._id === req.user?._id) {
           (review.rating = rating),
             (review.message = message),
             (review.user = user);
         }
       });
     } else {
-      product.reviews.push(review);
+      product?.reviews?.push(review);
     }
 
     let avg = 0;
