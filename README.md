@@ -1,6 +1,6 @@
 # ecommerce-app
 
-A full stack ecommerce app created using - React JS, MongoDB, Express JS, NodeJS, TailwindCSS, Redux-Toolkit, .
+A full stack ecommerce app created using - React JS, MongoDB, Express JS, NodeJS, TailwindCSS, Redux-Toolkit.
 
 This web-app all the functionalities of an ecommerce application from Authentication to view product, search product, Add to cart, Payment Options, Profile Options, Order Details.
 
