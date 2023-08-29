@@ -8,4 +8,5 @@ And seller can add product, events, and discount codes.
 
 Gif Demonstrating All The Main Functionalities :
 
-![ecomm-min](https://github.com/Bhupesh1x/ecommerce-app-updated/assets/78196557/447253a6-6709-48a0-8f82-a7755a7f8edd)
+![ecomm-min](https://github.com/Bhupesh1x/ecommerce-app-updated/assets/78196557/a04865fd-196b-4801-9c61-3635a3fb1679)
+
