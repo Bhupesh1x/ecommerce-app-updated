@@ -8,5 +8,6 @@ And seller can add product, events, and discount codes.
 
 Gif Demonstrating All The Main Functionalities :
 
-![ecomm-min](https://res.cloudinary.com/atm1x/image/upload/v1693291269/ecomm-min_uwho8r.gif)
+![ecomm-min](https://github.com/Bhupesh1x/ecommerce-app-updated/assets/78196557/53743ccd-760b-432b-9dd2-a07fef0f5343)
+
 
