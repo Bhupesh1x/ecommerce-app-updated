@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const serverUrl = "https://ecommerce-app-pink-kappa.vercel.app/api";
+export const serverUrl = "http://localhost:8000/api";
 
 async function uploadFile(file) {
   const formData = new FormData();
