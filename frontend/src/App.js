@@ -14,7 +14,7 @@ function App() {
       });
       setStripeApiKey(data.striptApiKey);
     } catch (error) {
-      toast.error(error?.response?.data);
+      console.log(error?.response?.data);
     }
   }
 
