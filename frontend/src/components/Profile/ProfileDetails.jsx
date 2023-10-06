@@ -101,7 +101,7 @@ function ProfileForm({ currUser }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} aria-required={true}>
+    <form onSubmit={handleSubmit}>
       <div className="flex justify-center w-full">
         <div className="relative">
           <img
@@ -513,7 +513,6 @@ function Address() {
                 value={address1}
                 onChange={(e) => setAddress1(e.target.value)}
                 placeholder="Enter Address 1..."
-                aria-required
               />
               <p className="font-semibold my-1 mt-2">
                 Address 2 <span className="ml-2 text-red-500">*</span>
@@ -525,7 +524,6 @@ function Address() {
                 value={address2}
                 onChange={(e) => setAddress2(e.target.value)}
                 placeholder="Enter your Address 2..."
-                aria-required
               />
               <p className="font-semibold my-1 mt-2">
                 Zip Code <span className="ml-2 text-red-500">*</span>
@@ -537,7 +535,6 @@ function Address() {
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
                 placeholder="Enter your Zip Code..."
-                aria-required
               />
               <p className="font-semibold my-1 mt-2">
                 Address Type <span className="ml-2 text-red-500">*</span>

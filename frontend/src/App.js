@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { serverUrl } from "./utils/uploadFile.js";
 import AllRoutes from "./AllRoutes.js";

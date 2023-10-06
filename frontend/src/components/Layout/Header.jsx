@@ -25,16 +25,20 @@ function Header() {
   };
 
   useEffect(() => {
-    if (searchTerm === "") {
-      setSearchData(null);
-    } else {
-      const filteredProducts =
-        productData &&
-        productData.filter((product) =>
-          product.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      setSearchData(filteredProducts);
-    }
+    const getSearchData = setTimeout(() => {
+      if (searchTerm === "") {
+        setSearchData(null);
+      } else {
+        const filteredProducts =
+          productData &&
+          productData.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        setSearchData(filteredProducts);
+      }
+    }, 500);
+
+    return () => clearTimeout(getSearchData);
   }, [productData, searchTerm]);
 
   function handleOpenCart() {

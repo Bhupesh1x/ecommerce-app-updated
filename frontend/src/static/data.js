@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { MdTrackChanges } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 // navigation Data
@@ -325,7 +324,6 @@ export const productData = [
     rating: 5,
     total_sell: 80,
     stock: 10,
-    category: "Mobile & Tablets",
   },
   {
     id: 3,
@@ -356,7 +354,6 @@ export const productData = [
     rating: 4,
     total_sell: 75,
     stock: 10,
-    category: "Computers & Laptop",
   },
   {
     id: 4,
@@ -418,7 +415,6 @@ export const productData = [
     rating: 5,
     total_sell: 49,
     stock: 10,
-    category: "Shoes",
   },
   {
     id: 6,

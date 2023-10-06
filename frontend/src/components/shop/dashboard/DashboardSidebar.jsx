@@ -4,7 +4,6 @@ import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { VscNewFile } from "react-icons/vsc";
-import { CiMoneyBill } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { HiOutlineReceiptRefund } from "react-icons/hi";
 
