@@ -35,7 +35,10 @@ function ProductDetailsModal({ setOpen, product }) {
         className="absolute top-2 right-4 cursor-pointer"
       />
 
-      <div className="flex flex-col md:flex-row gap-6">
+      <div
+        className="flex flex-col md:flex-row gap-6"
+        data-cy="product-card-details-modal"
+      >
         <div className="w-full md:w-[50%]">
           <img
             src={product.images[0]}

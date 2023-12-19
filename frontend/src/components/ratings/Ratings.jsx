@@ -4,7 +4,7 @@ import { BsStarHalf } from "react-icons/bs";
 
 function Ratings({ ratings }) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center" data-cy="product-card-ratings">
       {[1, 2, 3, 4, 5].map((rating) => (
         <div key={rating}>
           {rating <= ratings ? (

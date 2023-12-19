@@ -25,6 +25,7 @@ function Navbar({ activeNo, isColumn }) {
         {!isColumn && (
           <div
             className="bg-white relative w-fit px-8 py-2 rounded-t-md cursor-pointer"
+            data-cy="all-categories-selector"
             onClick={handleDropdownClick}
           >
             All Categories{" "}
@@ -36,6 +37,7 @@ function Navbar({ activeNo, isColumn }) {
                     key={index}
                     className="flex items-center my-2 cursor-pointer select-none"
                     onClick={() => handleSubmit(data.title)}
+                    data-cy="all-categories-results"
                   >
                     <img
                       src={`${data?.image_Url}`}

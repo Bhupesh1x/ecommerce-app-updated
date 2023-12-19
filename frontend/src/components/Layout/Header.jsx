@@ -74,7 +74,10 @@ function Header() {
             <div className="absolute left-0 top-9 bg-slate-50 border border-gray-300 rounded-md shadow-sm-2 z-[9] p-4 w-full">
               {searchData?.map((data, index) => (
                 <Link to={`/product/${data._id}`} key={index}>
-                  <div className="flex items-center my-2 cursor-pointer">
+                  <div
+                    className="flex items-center my-2 cursor-pointer"
+                    data-cy="search-results"
+                  >
                     <img
                       src={`${data?.images[0]}`}
                       alt=""
